@@ -125,15 +125,15 @@ export default defineConfig({
     port: 4000, // 设置服务启动端口号
     open: true, // 设置服务启动时是否自动打开浏览器
     cors: true, // 允许跨域
-    host: '192.168.3.3',
+    // host: '192.168.3.3',
     https: {
       cert: fs.readFileSync(path.join(__dirname, 'keys/cert.crt')),
       key: fs.readFileSync(path.join(__dirname, 'keys/cert.key'))
-    }
+    },
     // 设置代理，根据我们项目实际情况配置
     // proxy: {
-    //   '/api': {
-    //     target: 'http://xxx.xxx.xxx.xxx:8000',
+    //   '/localhost': {
+    //     target: 'https://www.qiuadam.site/',
     //     changeOrigin: true,
     //     secure: false,
     //     rewrite: (path) => path.replace('/api/', '/')
