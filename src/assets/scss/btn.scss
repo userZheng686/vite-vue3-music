@@ -1,0 +1,33 @@
+//拟态背景
+.btn__linear {
+    background: var(--dark-normalBackgroundColor,#ffffff);
+    border: 2px solid var(--dark-boxShadow,#fff);
+    border-radius: 50%;
+    /* padding: 6px 6px; */
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    box-shadow: -10px -10px 15px var(--dark-boxShadow,#fff), 10px 10px 15px rgba(0, 0, 0, 0.1), inset -5px -5px 15px var(--dark-boxShadow,#fff),
+        inset 5px 5px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    i {
+        font-size: 20px;
+    }
+}
+
+.btn__linear:hover {
+    i {
+        color: red;
+    }
+}
+
+.btn_linear__disable {
+    i {
+        color: rgba(166, 166, 166, 1) !important;
+    }
+}

@@ -1,0 +1,39 @@
+//菜单列表
+.router--list {
+    margin-left: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    ul {
+        list-style: none;
+    }
+
+    .menu {
+        display: flex;
+        align-items: center;
+   
+        padding-inline-start: 0px;
+        user-select: none;
+    }
+
+    .menu--item {
+        margin-right: 30px;
+    }
+
+    .is-active span {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--dark-router-active, rgba(0, 0, 0, 1));
+    }
+
+    .is-active::after {
+        display: block;
+        content: "";
+        height: 4px;
+        width: 90%;
+        margin: 0 auto;
+        background-color: #ec4141;
+        border-radius: 2px;
+    }
+}

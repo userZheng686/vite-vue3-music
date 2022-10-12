@@ -1,0 +1,13 @@
+export const enum Names {
+    POPUP = 'POPUP',
+    SHAREPOPUP = 'SHAREPOPUP',
+    USER = 'USER',
+    SONG = 'SONG',
+    SONGCOMMENT = 'SONGCOMMENT',
+    HEADER = 'HEADER',
+    FOLDER = 'FOLDER',
+    DOWNLOAD = 'DOWNLOAD',
+    SONGMENUPOPUP = 'SONGMENUPOPUP',
+    PATH = 'PATH',
+    COUNT = 'COUNT',
+}

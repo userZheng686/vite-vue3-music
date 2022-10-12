@@ -1,0 +1,9 @@
+.git
+.vscode
+node_modules
+.DS_Store
+dist
+data
+release
+dist-ssr
+*.local

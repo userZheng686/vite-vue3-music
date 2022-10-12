@@ -1,0 +1,23 @@
+html.dark {
+    --dark-active-backgroundColor: #424248;
+    --dark-router-active: rgba(255, 255, 255, 0.5);
+    /* --dark-item-odd : rgb(38 32 32 / 80%); */
+    --dark-item-backgroundOdd : rgba(38, 32, 32 , 0.8);
+    --dark-item-backgroundHover : rgb(60 62 64);
+    --dark-gray : rgba(255,255,255,0.5);
+    --dark-gray-hover : white;
+    --dark-info : white;
+    --dark-carousel-backgroundColor : rgb(52 48 48);
+    --dark-category-backgroundColor : rgb(57 52 49);
+    --dark-normalBackgroundColor : rgb(41 41 48);
+    --dark-boxShadow : black;
+    --dark-lyric-show : rgba(249, 240, 240,.8);
+    --dark-lyric-text : rgb(227, 227, 227 , 0.47);
+    --dark-header : #2d2a2a;
+    --dark-footer : black;
+    --dark-circle : #464242;
+    --dark-blackBackgroundColor : black;
+    --dark-commentButton : rgb(57 52 49);
+    --dark-msg-content : rgb(54 63 72);
+    --dark-eventBackgroundColor : rgb(61 61 61);
+}

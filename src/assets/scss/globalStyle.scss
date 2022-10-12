@@ -1,0 +1,174 @@
+
+@use './element/dark.scss';
+
+/*默认的有层次字体 适用于名称之类的 放上去就会变色*/
+.gray {
+    cursor: pointer;
+    color: var(--dark-gray, rgb(144, 147, 153, 0.8));
+    transition: all 0.2s;
+}
+
+.gray:hover {
+    color: var(--dark-gray-hover, black);
+}
+
+.v3-menus{
+    padding : 0px !important;
+}
+
+//信息
+.info {
+    color: var(--dark-info, rgb(144, 147, 153));
+}
+
+//蓝色字体
+.blue {
+    color: rgb(64, 159, 255, 0.8);
+    cursor: pointer;
+    transition: all 0.2s;
+        text-decoration: none;
+}
+
+.blue:hover {
+    color: rgb(64, 159, 255, 1);
+}
+
+//喜欢
+.like {
+    color: rgb(236, 65, 65);
+}
+
+//没版权
+.noCopyright {
+    color: #c0c4cc;
+}
+
+/*文本缩进*/
+.single-clamp {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    // width: 150px;
+}
+
+//单行缩进
+.more-clamp1 {
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    height: auto;
+    -webkit-box-orient: vertical;
+}
+
+//多行缩进
+.more-clamp2 {
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    height: auto !important;
+    -webkit-box-orient: vertical;
+}
+
+//多行缩进
+.more-clamp3 {
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    height: auto !important;
+    -webkit-box-orient: vertical;
+}
+
+/**MV SQ外层 */
+.info--name {
+    display: flex;
+    // flex: 1;
+    font-size: 14px;
+    align-items: center;
+    min-width: 50px;
+    word-break: keep-all;
+}
+
+/**MV SQ */
+.info--flag {
+    border: 1px solid rgb(236, 65, 65);
+    border-radius: 3px;
+    padding-left: 2px;
+    color: rgb(236, 65, 65);
+    padding-right: 2px;
+    margin-right: 10px;
+    margin-top: 2px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    word-break:keep-all;
+    i {
+        margin-top: -2px;
+    }
+}
+
+.info--vip {
+    border: 1px solid rgb(254, 103, 46);
+    border-radius: 3px;
+    padding-left: 2px;
+    color: rgb(254, 103, 46);
+    padding-right: 2px;
+    margin-right: 10px;
+    margin-top: 2px;
+    font-size: 12px;
+}
+
+.info--voice {
+    border: 1px solid rgb(197 192 191);
+    border-radius: 3px;
+    padding-left: 2px;
+    color: rgb(197 192 191);
+    padding-right: 2px;
+    margin-right: 10px;
+    margin-top: 2px;
+    font-size: 12px;
+}
+
+//立即播放图标
+.player--circle {
+    position: absolute;
+    background-color: #fbf7f6;
+    color: #ec4141;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    opacity: 1;
+    transition: all 0.2s;
+}
+
+/**禁止点击*/
+.cursorAuto {
+    cursor: auto;
+}
+
+//评论标题
+.comment--title {
+    span {
+        font-weight: bold;
+        font-size: 24px;
+    }
+}
+
+//标题
+.comment--title {
+    font-weight: bold;
+}
+
+.menus-item,
+.my-menus {
+    touch-action: none;
+}
+

@@ -1,0 +1,40 @@
+//el-table样式封装
+
+//设置row背景
+.el-table__set__row_bgColor {
+    // background-color: rgb(240, 241, 242);
+}
+
+//设置默认高度 不然高度不一致太难看了
+.el-table__set__row__normalheight {
+    height: 54px;
+}
+
+//设置一下灰色字体 有层次感
+.el-table__column__info {
+    color: rgb(144, 147, 153, 0.8);
+    cursor: pointer;
+    word-break: normal;
+}
+
+//灰色字体 没有点击
+.el-table__column__info__auto {
+    color: rgb(144, 147, 153, 0.8);
+    word-break: normal;
+}
+
+.el-table__column__info:hover {
+    color: rgb(144, 147, 153, 1);
+}
+
+//居中
+:deep(.el-table__column__center) {
+    text-align: center;
+}
+
+.page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}

@@ -1,0 +1,15 @@
+//针对滚动条样式进行封装 默认的不好看
+@mixin scroll-bar($width, $height) {
+    width: $width + px;
+    height: $height + px;
+}
+
+@mixin scroll-bar-thumb($radius, $shadow, $color) {
+    border-radius: $radius + px;
+    -webkit-border-radius: $radius + px;
+    -moz-border-radius: $radius + px;
+    -ms-border-radius: $radius + px;
+    -o-border-radius: $radius + px;
+    box-shadow: inset 0 0 $shadow + px $color;
+    background-color: $color;
+}
