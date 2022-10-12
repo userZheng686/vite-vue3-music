@@ -178,7 +178,7 @@ import { SongDetailSongsItem } from "i/api/api_song";
 import { playOne, play } from "@/utils/play";
 import { playTime } from "@/utils/filter";
 import { contextMenuSong } from "@/contextMenu/song/normal";
-import { useSongStore } from "@/store/playlist";
+import { useSongStore } from "@/store/playList";
 import { useSongMenuPopupStore } from "@/store/songMenuPopup";
 
 let elMessage: any = inject("message") as any;

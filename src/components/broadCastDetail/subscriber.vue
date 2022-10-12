@@ -47,7 +47,7 @@
 import { getRadioSubscribers } from "@/api/api_radio";
 import { getPlayListSubscribers } from "@/api/api_playList";
 import { useRouter } from "vue-router";
-import { useSongStore } from "@/store/playlist";
+import { useSongStore } from "@/store/playList";
 import { SubscribersItem } from "i/api/api_radio.d";
 
 interface Props {

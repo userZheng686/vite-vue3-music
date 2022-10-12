@@ -119,7 +119,7 @@
 import { useRoute, useRouter } from "vue-router";
 import { getRadioDJDetail, RadioSub } from "@/api/api_radio";
 import { CaretRight, Star, Share, StarFilled } from "@element-plus/icons-vue";
-import { useSongStore } from "@/store/playlist";
+import { useSongStore } from "@/store/playList";
 import { play } from "@/utils/play";
 import { RadioProgramDetailItem } from "i/api/api_radio.d";
 //分享弹窗

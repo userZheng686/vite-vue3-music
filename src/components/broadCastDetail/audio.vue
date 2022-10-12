@@ -75,7 +75,7 @@
 import type { Ref } from "vue";
 import { useRoute } from "vue-router";
 import { getRadioProgramDetail } from "@/api/api_radio";
-import { useSongStore } from "@/store/playlist";
+import { useSongStore } from "@/store/playList";
 import { useDownload } from "@/store/download";
 import { radio } from "@/localStorage/init";
 import emitter from "@/utils/eventBus";

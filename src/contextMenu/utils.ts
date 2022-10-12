@@ -1,7 +1,7 @@
 //菜单列表里面的公共方法
 
 import { SongDetailSongsItem } from "i/api/api_song";
-import { useSongStore } from "@/store/playlist";
+import { useSongStore } from "@/store/playList";
 import { useUserInformation } from "@/store/user";
 import { setComment, playSong, setAlbum, setShare, setDownload, removeItem } from '@/localStorage/set'
 import { addSongToSongMenu, collectSongMenu, deletePlaylist, getRecommendSongs, getSongMenuDetail } from "@/api/api_playList";

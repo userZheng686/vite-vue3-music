@@ -148,7 +148,7 @@ import { playlist } from "i/api/api_playList.d";
 import { intelligencePlay } from "@/api/api_playList";
 import { play } from "@/utils/play";
 import { useSongMenuPopupStore } from "@/store/songMenuPopup";
-import { useSongStore } from "@/store/playlist";
+import { useSongStore } from "@/store/playList";
 import { contextMenuNavigationPlaylist } from "@/contextMenu/playlist/navigation";
 import { useCount } from "@/store/count";
 
