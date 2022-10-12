@@ -4,6 +4,7 @@ import type { Ref } from 'vue'
 import { cookie } from '@/localStorage/init'
 import { downloadItem } from 'i/view/videoDetail';
 import { SongDetailSongsItem } from 'i/api/api_song.d';
+import { baseUrl } from './config';
 //中间件处理 将不需要缓存的接口提取出来 然后做一层包装
 let noCachePath = ['/user/playlist', '/playlist/tracks', '/mv/sub', '/video/sub', '/comment/hot', '/comment/mv', '/comment/video',
     '/resource/like', '/mv/all', '/mv/detail', '/mv/detail/info', '/record/recent/song', '/video/detail', '/video/detail/info', '/song/download/url','/msg/forwards','/msg/notices','/users/batch','/user/follow/recommend',
@@ -59,7 +60,7 @@ export async function uploadPlaylistCover(id: number, file: File): Promise<uploa
         const imgSize = await getImgSize(file)
         const res = await axios({
             method: 'post',
-            url: `https://192.168.3.3:3000/playlist/cover/update?id=${id}&cookie=${cookie.value}&imgSize=${imgSize.width
+            url: `${baseUrl}/playlist/cover/update?id=${id}&cookie=${cookie.value}&imgSize=${imgSize.width
                 }&imgX=0&imgY=0&timestamp=${Date.now()}`,
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -80,7 +81,7 @@ export async function uploadAvatar(file: File): Promise<uploadCoverResult> {
         const imgSize = await getImgSize(file)
         const res = await axios({
             method: 'post',
-            url: `https://192.168.3.3:3000/avatar/upload?cookie=${cookie.value}&imgSize=${imgSize.width
+            url: `${baseUrl}/avatar/upload?cookie=${cookie.value}&imgSize=${imgSize.width
                 }&imgX=0&imgY=0&timestamp=${Date.now()}`,
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -99,7 +100,7 @@ export async function upload(formdata: FormData, url: string, downLoadProgress: 
     return new Promise((resolve, reject) => {
         axios({
             method: 'POST',
-            url: `https://localhost:4000${url}?time=${Date.now()}&cookie=${cookie.value}`,
+            url: `${baseUrl}${url}?time=${Date.now()}&cookie=${cookie.value}`,
             headers: {
                 'Content-Type': 'multipart/form-data',
             },

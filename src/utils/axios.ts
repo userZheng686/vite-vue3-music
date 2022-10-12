@@ -1,12 +1,11 @@
 import Axios from 'axios'
+import { baseUrl } from './config'
 
 let statusCode = [200, 803]
 
-// const baseURL: string = 'https://netease-cloud-music-api-one-amber.vercel.app/'
-const baseURL: string = 'https://192.168.3.3:3000/'
 
 let option = {
-    baseURL,
+    baseUrl,
     withCredentials: true,
     headers: {
         "Content-Type": "application/json; charset=UTF-8;"
