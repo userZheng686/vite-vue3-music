@@ -61,7 +61,7 @@
     "vite-plugin-commonjs": "^0.5.2",
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-electron": "^0.4.5",
-    "vite-plugin-inspect": "^0.5.0",
+    "vite-plugin-inspect": "^0.7.5",
     "vite-plugin-require-transform": "^1.0.3",
     "vue-tsc": "^0.3.0"
   },

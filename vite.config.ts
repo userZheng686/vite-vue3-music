@@ -76,6 +76,7 @@ export default defineConfig({
         ElementPlusResolver(),
       ],
       dts: path.resolve(pathSrc, 'components.d.ts'),
+      directoryAsNamespace : true
     }),
     Icons({
       autoInstall: true,
