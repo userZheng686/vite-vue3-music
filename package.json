@@ -1,11 +1,12 @@
 {
   "name": "neteasemusic",
   "version": "0.0.0",
-  "main" : "dist/electron-main/index.js",
+  "main": "dist/electron-main/index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development vite",
     "build": "rimraf dist && vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "git": "git add . && git cz && git push"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.5",
@@ -47,6 +48,8 @@
     "@vuedx/typescript-plugin-vue": "^0.7.5",
     "@vueuse/electron": "^8.9.2",
     "autoprefixer": "^10.4.7",
+    "commitizen": "^4.2.5",
+    "cz-customizable": "^7.0.0",
     "electron": "^19.0.8",
     "electron-builder": "^23.0.3",
     "electron-devtools-installer": "^3.2.0",
@@ -98,7 +101,7 @@
     "nsis": {
       "oneClick": false,
       "perMachine": false,
-      "allowElevation" : true,
+      "allowElevation": true,
       "allowToChangeInstallationDirectory": true,
       "deleteAppDataOnUninstall": true,
       "installerIcon": "./public/icon.ico",
@@ -116,6 +119,11 @@
     ],
     "releaseInfo": {
       "releaseNotes": "版本更新的具体内容"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
     }
   }
 }
