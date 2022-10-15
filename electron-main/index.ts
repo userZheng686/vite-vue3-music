@@ -7,9 +7,6 @@ import createMiniWindow from './mini/index'
 import {createTray} from './tray/index'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 
-if (process.env.NODE_ENV === "production") {
-    global.__images = path.resolve(__dirname,'');
-}
 
 //设置开机自动启动
 //windows
@@ -43,7 +40,7 @@ app.whenReady().then(() => {
 
 
     global.mainWindow = createMainWindow(BrowserWindow)
-    global.lyricWindow =createLyricWindow(BrowserWindow)
+    global.lyricWindow = createLyricWindow(BrowserWindow)
     global.miniWindow = createMiniWindow(BrowserWindow)
     createTray()
 

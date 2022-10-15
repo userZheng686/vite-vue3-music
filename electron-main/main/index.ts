@@ -1,7 +1,7 @@
 import { app, session, ipcMain, shell, DownloadItem, BrowserWindow, nativeImage } from 'electron';
 import path from 'path'
 import { readDir, readFileMusic, readFileMV, encode163Key } from './read'
-import { identifyMusic } from './identify'
+// import { identifyMusic } from './identify'
 import { openFolder, openSong } from './folder'
 import { setStoreDownload } from './download'
 import { setCookie, getCookie, setHistroyDownloadInterrupted, getHistroyDownloadInterrupted, clearHistroyDownloadInterrupted, clearAllHistoryDownloadInterrupted, setDownloadSongs, getDownloadSongs, clearDownloadSongs, getDownloadMVs, clearDownloadMVs, getDownloadPath, setDownloadPath, getCustomDownload, clearCustomDownload, setUserScanFolder, getUserScanFolder, setUserCheckScanFolder, getUserCheckScanFolder, getDownloadVoicePath, getDownloadMVPath, patchUpdateCustomDownload } from './store'
@@ -28,24 +28,44 @@ let win: BrowserWindow
 
 let playStatus: boolean = false
 
-let icoIcon = nativeImage.createFromPath(`${process.env.NODE_ENV === "development" ? './public/icon.ico' : `${global.__images}/icon.ico`}`)
-let prevIcon = nativeImage.createFromPath(`${process.env.NODE_ENV === "development" ? './public/ic_previous.png' : `../public/ic_previous.png`}`)
-let playIcon = nativeImage.createFromPath(`${process.env.NODE_ENV === "development" ? './public/ic_play.png' : `../public/ic_play.png`}`)
-let pauseIcon = nativeImage.createFromPath(`${process.env.NODE_ENV === "development" ? './public/ic_pause.png' : `../public/ic_pause.png`}`)
-let nextIcon = nativeImage.createFromPath(`${process.env.NODE_ENV === "development" ? './public/ic_next.png' : `../public/ic_next.png`}`)
+let icoIcon = 
+    !app.isPackaged ?
+        path.join(__dirname, './public/icon.ico') :
+        path.join(__dirname, '../icon.ico')
+
+let prevIcon = 
+    !app.isPackaged ?
+        path.join(__dirname, './public/ic_previous.png') :
+        path.join(__dirname, '../ic_previous.png')
+
+let playIcon =
+    !app.isPackaged ?
+        path.join(__dirname, './public/ic_play.png') :
+        path.join(__dirname, '../ic_play.png')
+
+let pauseIcon =
+    !app.isPackaged ?
+        path.join(__dirname, './public/ic_pause.png') :
+        path.join(__dirname, '../ic_pause.png')
+        
+let nextIcon =
+    !app.isPackaged ?
+        path.join(__dirname, './public/ic_next.png') :
+        path.join(__dirname, '../ic_next.png')
+
 
 const setThumbarButtons = () => {
     win.setThumbarButtons([
         {
             tooltip: "上一曲",
-            icon: prevIcon,
+            icon: nativeImage.createFromPath(prevIcon),
             click() {
                 win.webContents.send('prev')
             },
         },
         {
             tooltip: playStatus ? "暂停" : '播放',
-            icon: playStatus ? pauseIcon : playIcon,
+            icon: playStatus ? nativeImage.createFromPath(pauseIcon) : nativeImage.createFromPath(playIcon),
             click() {
                 if (playStatus) {
                     win.webContents.send('pause')
@@ -56,7 +76,7 @@ const setThumbarButtons = () => {
         },
         {
             tooltip: "下一曲",
-            icon: nextIcon,
+            icon: nativeImage.createFromPath(nextIcon),
             click() {
                 win.webContents.send('next')
             },
@@ -87,12 +107,18 @@ const createMainWindow = (browserWindow: typeof BrowserWindow) => {
         },
         minimizable: true,
         maximizable: true,
-        icon: icoIcon,
+        icon: nativeImage.createFromPath(icoIcon),
         titleBarStyle: "hiddenInset",
     }
     win = new BrowserWindow(obj)
 
-    win.loadURL(winURL);
+    if (app.isPackaged) {
+        // win.loadFile(path.join(__dirname, "../index.html"));
+        win.loadURL(winURL);
+    } else {
+        win.loadURL(winURL);
+    }
+
 
     win.setThumbnailToolTip('网易云音乐')
     win.setMenu(null)
@@ -184,10 +210,10 @@ app.whenReady().then(() => {
     })
 
     //读取音频文件（识别）
-    ipcMain.handle('identify', async (event, filePath: string) => {
-        const metadata = await identifyMusic(filePath)
-        return metadata
-    })
+    // ipcMain.handle('identify', async (event, filePath: string) => {
+    //     const metadata = await identifyMusic(filePath)
+    //     return metadata
+    // })
 
     //打开文件夹选择窗口
     ipcMain.handle('openFolder', async (event) => {

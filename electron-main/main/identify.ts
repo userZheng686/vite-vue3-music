@@ -1,26 +1,26 @@
-const acrcloud = require("acrcloud");
-const fs = require("fs");
+import fs from 'fs'
+// const acrcloud = require("acrcloud");
 
-const acr = new acrcloud({
-    host: "identify-cn-north-1.acrcloud.cn",
-    access_key: "fcbbf52df763fe60a3c6e26bd63109d6",
-    access_secret: "oze0zJV1lUTWXHPcCimm3ONSlW970WuRTTSbI8c7"
-});
 
-export function identifyMusic(filePath: string) {
-    return new Promise(async (resolve) => {
-        //剪切 只取音频的前10s
-        //这地方用到了AudioBuffer
-        let buffer = fs.readFileSync(filePath)
-        acr.audio_format = 'flac'
-        // let newBuffer = await cutAudio(buffer)
-        // resolve(newBuffer)
-        acr.identify(buffer).then(metadata => {
-            resolve(metadata);
-        });
-    })
+// const acr = new acrcloud({
+//     host: "identify-cn-north-1.acrcloud.cn",
+//     access_key: "fcbbf52df763fe60a3c6e26bd63109d6",
+//     access_secret: "oze0zJV1lUTWXHPcCimm3ONSlW970WuRTTSbI8c7"
+// });
 
-}
+// export function identifyMusic(filePath: string) {
+//     return new Promise(async (resolve) => {
+//         //剪切 只取音频的前10s
+//         //这地方用到了AudioBuffer
+//         let buffer = fs.readFileSync(filePath)
+//         acr.audio_format = 'flac'
+//         // let newBuffer = await cutAudio(buffer)
+//         // resolve(newBuffer)
+//         acr.identify(buffer).then(metadata => {
+//             resolve(metadata);
+//         });
+//     })
+// }
 
 //裁剪音频
 function cutAudio(buffer: Buffer) {

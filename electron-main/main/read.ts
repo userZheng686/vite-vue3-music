@@ -4,10 +4,12 @@ import path from 'path';
 import { Base64 } from "js-base64";
 //存储163key
 import { setSong163Key, getSong163Key, clear163key } from './store';
-const mm = require('music-metadata');
-const crypto = require("crypto");
-const util = require('util');
-const ffmetadata = require("ffmetadata");
+
+import * as mm from 'music-metadata'
+import * as crypto from 'crypto'
+import * as util from 'util'
+import * as ffmetadata from 'ffmetadata'
+
 
 //读取目录中的所有文件
 let readDir = (dirPath: string) => {

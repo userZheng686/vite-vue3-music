@@ -1,5 +1,6 @@
 import { app } from 'electron'
 import fs from 'fs'
+import EleStore from 'electron-store'
 
 interface DownloadParam {
     eTag: string | undefined;
@@ -18,7 +19,6 @@ interface DownloadParam {
 }
 
 
-const Store = require('electron-store');
 
 let option = {
     name: "config",//文件名称,默认 config
@@ -27,7 +27,7 @@ let option = {
     //    encryptionKey:"aes-256-cbc" ,//对配置文件进行加密
     clearInvalidConfig: true, // 发生 SyntaxError  则清空配置,
 }
-const store = new Store(option);
+const store = new EleStore(option);
 
 //设置用户下载的歌曲id（包含云盘上传 客户端歌曲下载）
 export function setDownloadSongs(ids: number[]) {
