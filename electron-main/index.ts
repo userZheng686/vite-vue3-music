@@ -8,8 +8,21 @@ import {createTray} from './tray/index'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 
 if (process.env.NODE_ENV === "production") {
-    global.__images = path.resolve(__dirname);
+    global.__images = path.resolve(__dirname,'');
 }
+
+//设置开机自动启动
+//windows
+app.setLoginItemSettings({
+  openAtLogin: true,
+  args: ["--openAsHidden"],
+});
+//mac
+//设置开机启动
+// app.setLoginItemSettings({
+//   openAtLogin: true,
+//   openAsHidden: true,
+// });
 
 app.commandLine.appendSwitch('wm-window-animations-disabled');
 app.commandLine.appendSwitch('autoplay-policy','no-user-gesture-required');
@@ -23,6 +36,8 @@ protocol.registerSchemesAsPrivileged([
         },
     },
 ]);
+
+
 
 app.whenReady().then(() => {
 

@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development vite",
     "build": "rimraf dist && vite build",
+    "package": "electron-builder",
     "serve": "vite preview",
     "git": "git add . && git cz && git push"
   },
@@ -71,6 +72,7 @@
   "build": {
     "appId": "com.neteaseMusic.desktop",
     "productName": "neteaseMusic",
+    "electronVersion" : "1.0.0",
     "asar": true,
     "copyright": "Copyright © 2022 neteaseMusic",
     "directories": {
@@ -100,6 +102,7 @@
     },
     "nsis": {
       "oneClick": false,
+      "guid" : "neteaseMusic",
       "perMachine": false,
       "allowElevation": true,
       "allowToChangeInstallationDirectory": true,
@@ -111,10 +114,11 @@
       "createStartMenuShortcut": true,
       "shortcutName": "网易云音乐"
     },
+    
     "publish": [
       {
         "provider": "generic",
-        "url": "https://127.0.0.1:4000"
+        "url": "https://neteasemusic.netlify.app/#/upgrade"
       }
     ],
     "releaseInfo": {

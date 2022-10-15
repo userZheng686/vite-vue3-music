@@ -23,27 +23,27 @@ const pathSrc = path.resolve(__dirname, 'src')
 export default defineConfig({
   plugins: [
     vue(),
-    // electron({
-    //   main: {
-    //     entry: "electron-main/index.ts", // 主进程文件
-    //     vite: {
-    //       build: {
-    //         outDir: 'dist/electron-main',
-    //       },
-    //     },
-    //   },
-    //   preload: {
-    //     input: [path.join(__dirname, "./electron-preload/index.ts")], // 预加载文件
-    //     vite: {
-    //       build: {
-    //         // For debug
-    //         // sourcemap: 'inline',
-    //         outDir: 'dist/electron-preload',
-    //       },
-    //     },
-    //   },
-    // }),
-    // electronRenderer(),
+    electron({
+      main: {
+        entry: "electron-main/index.ts", // 主进程文件
+        vite: {
+          build: {
+            outDir: 'dist/electron-main',
+          },
+        },
+      },
+      preload: {
+        input: [path.join(__dirname, "./electron-preload/index.ts")], // 预加载文件
+        vite: {
+          build: {
+            // For debug
+            // sourcemap: 'inline',
+            outDir: 'dist/electron-preload',
+          },
+        },
+      },
+    }),
+    electronRenderer(),
     polyfillExports(),
     AutoImport({
       // Auto import functions from Vue, e.g. ref, reactive, toRef...

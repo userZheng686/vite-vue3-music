@@ -29,10 +29,10 @@ let win: BrowserWindow
 let playStatus: boolean = false
 
 let icoIcon = nativeImage.createFromPath(`${process.env.NODE_ENV === "development" ? './public/icon.ico' : `${global.__images}/icon.ico`}`)
-let prevIcon = nativeImage.createFromPath(`${process.env.NODE_ENV === "development" ? './public/ic_previous.png' : `${global.__images}/ic_previous.png`}`)
-let playIcon = nativeImage.createFromPath(`${process.env.NODE_ENV === "development" ? './public/ic_play.png' : `${global.__images}/ic_play.png`}`)
-let pauseIcon = nativeImage.createFromPath(`${process.env.NODE_ENV === "development" ? './public/ic_pause.png' : `${global.__images}/ic_pause.png`}`)
-let nextIcon = nativeImage.createFromPath(`${process.env.NODE_ENV === "development" ? './public/ic_next.png' : `${global.__images}/ic_next.png`}`)
+let prevIcon = nativeImage.createFromPath(`${process.env.NODE_ENV === "development" ? './public/ic_previous.png' : `../public/ic_previous.png`}`)
+let playIcon = nativeImage.createFromPath(`${process.env.NODE_ENV === "development" ? './public/ic_play.png' : `../public/ic_play.png`}`)
+let pauseIcon = nativeImage.createFromPath(`${process.env.NODE_ENV === "development" ? './public/ic_pause.png' : `../public/ic_pause.png`}`)
+let nextIcon = nativeImage.createFromPath(`${process.env.NODE_ENV === "development" ? './public/ic_next.png' : `../public/ic_next.png`}`)
 
 const setThumbarButtons = () => {
     win.setThumbarButtons([
