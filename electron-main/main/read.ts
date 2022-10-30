@@ -6,8 +6,8 @@ import { Base64 } from "js-base64";
 import { setSong163Key, getSong163Key, clear163key } from './store';
 
 import * as mm from 'music-metadata'
-import * as crypto from 'crypto'
-import * as util from 'util'
+import crypto from 'crypto'
+import util from 'util'
 import * as ffmetadata from 'ffmetadata'
 
 
@@ -296,74 +296,68 @@ let testClear163Key = (filePath: string) => {
         clear163key()
         resolve('1')
     })
-
 }
 
 
 //读取歌曲的文件元信息
 let readFileMusic = async (filePath: string) => {
     // await testClear163Key(filePath)
-    return new Promise(async (resolve, reject) => {
-        const metadata = await mm.parseFile(path.join(filePath));
-        const { common, format } = metadata
-        let key = getSong163Key(filePath)
-        let obj = {}, decodeJson: any
-        if (key) {
-            decodeJson = decode163Key(key.substring(22))
+    const metadata = await mm.parseFile(filePath);
+    const key = getSong163Key(filePath)
+    const { common, format } = metadata
+    let obj = {}, decodeJson: any
+    if (key) {
+        decodeJson = decode163Key(key.substring(22))
+        if (decodeJson) {
+            obj = setObj(filePath, decodeJson, common, format)
+        } else {
+            obj = setObj(filePath, null, common, format)
+        }
+        return JSON.stringify(obj)
+    } else {
+        let obj = await ffmetadata.read(filePath, function (err, data) {
+            let { comment } = data
+            setSong163Key(filePath, comment)
+            if (comment) {
+                decodeJson = decode163Key(comment.substring(22))
+            }
             if (decodeJson) {
                 obj = setObj(filePath, decodeJson, common, format)
             } else {
                 obj = setObj(filePath, null, common, format)
             }
-            resolve(JSON.stringify(obj))
-        } else {
-            ffmetadata.read(filePath, function (err, data) {
-                let { comment } = data
-                setSong163Key(filePath, comment)
-                if (comment) {
-                    decodeJson = decode163Key(comment.substring(22))
-                }
-                if (decodeJson) {
-                    obj = setObj(filePath, decodeJson, common, format)
-                } else {
-                    obj = setObj(filePath, null, common, format)
-                }
-                resolve(JSON.stringify(obj))
-            })
-        }
-    })
+            return obj
+        })
+        return JSON.stringify(obj)
+    }
+
 }
 
 //读取MV的文件元信息
 let readFileMV = async (filePath: string) => {
-    return new Promise(async (resolve, reject) => {
-        const metadata = await mm.parseFile(path.join(filePath));
-        const { common, format } = metadata
-        let fileSize = diskSize(format.bitrate * format.duration, "M");
-        if (fileSize.split(".").length) {
-            fileSize = fileSize.split(".")[0] + "." + fileSize.split(".")[1]?.substring(0, 2);
-        }
-        resolve(fileSize)
-    })
+    const metadata = await mm.parseFile(path.join(filePath));
+    const { common, format } = metadata
+    let fileSize = diskSize(format.bitrate * format.duration, "M");
+    if (fileSize.split(".").length) {
+        fileSize = fileSize.split(".")[0] + "." + fileSize.split(".")[1]?.substring(0, 2);
+    }
+    return fileSize
 }
 
 //写入歌曲的文件元信息
 let writeFileMusicMetadata = async (filePath: string, obj: encodeOrigin) => {
-    return new Promise(async (resolve, reject) => {
-        let artistName = obj?.artists?.map(item => item.name) || obj?.ar?.map(item => item.name) || obj?.pc?.ar || ''
-        let albumName = obj?.album?.name || obj?.al?.name
-        let comment = await encode163Key(filePath, obj)
-        let options = {
-            artist: artistName,
-            album: albumName,
-            title: obj?.name,
-            comment
-        };
-        console.log('comment', options)
-        ffmetadata.write(filePath, options, function (err) {
-            if (err) console.error("Error writing cover art");
-            else console.log("Cover art added");
-        })
+    let artistName = obj?.artists?.map(item => item.name) || obj?.ar?.map(item => item.name) || obj?.pc?.ar || ''
+    let albumName = obj?.album?.name || obj?.al?.name
+    let comment = await encode163Key(filePath, obj)
+    let options = {
+        artist: artistName,
+        album: albumName,
+        title: obj?.name,
+        comment
+    };
+    ffmetadata.write(filePath, options, function (err) {
+        if (err) console.error("Error writing cover art");
+        else console.log("Cover art added");
     })
 }
 

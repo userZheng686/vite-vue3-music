@@ -10,7 +10,7 @@
     <EventCloudDynamic />
     <!--分享动态-->
     <ShareEventDynamic />
-    <div class="main" :class="{ detail: !computedRoute(route.path) }">
+    <main class="main" :class="{ detail: !computedRoute(route.path) }">
       <router-view v-slot="{ Component, route }">
         <Navigation v-show="computedRoute(route.path)" />
         <div class="wrap" style="flex: 1; overflow-y: scroll; overflow-x: hidden">
@@ -24,7 +24,7 @@
           </transition>
         </div>
       </router-view>
-    </div>
+    </main>
     <footer class="footer" v-show="computedRoute(route.path)">
       <MusicPlay />
     </footer>

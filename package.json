@@ -70,10 +70,10 @@
     "vue-tsc": "^0.3.0"
   },
   "build": {
-    "appId": "com.neteaseMusic.desktop",
-    "productName": "neteaseMusic",
+    "appId": "com.neteaseCloudMusic.desktop",
+    "productName": "neteaseCloudMusic",
     "asar": true,
-    "copyright": "Copyright © 2022 neteaseMusic",
+    "copyright": "Copyright © 2022 neteaseCloudMusic",
     "directories": {
       "output": "release/${version}"
     },
@@ -101,7 +101,7 @@
     },
     "nsis": {
       "oneClick": false,
-      "guid" : "neteaseMusic",
+      "guid" : "neteaseCloudMusic",
       "perMachine": false,
       "allowElevation": true,
       "allowToChangeInstallationDirectory": true,
@@ -121,6 +121,9 @@
     ],
     "releaseInfo": {
       "releaseNotes": "版本更新的具体内容"
+    },
+    "fileAssociations" : {
+      "ext" : [".mp3",".flac",".mpeg",".MPEG",".wma"]
     }
   },
   "config": {

@@ -190,7 +190,7 @@ export function setDownloadPath(path: string) {
 
 //返回文件下载路径
 export function getDownloadPath() {
-    let downloadPath = store.get('downloadPath')
+    let downloadPath = store.get('downloadPath') || 'D:\\CloudMusic'
     if (downloadPath) {
         setDownloadPath(`D:\\CloudMusic`)
     }
@@ -262,7 +262,11 @@ export function getUserCheckScanFolder() {
 
 //设置163key
 export function setSong163Key(filePath: string, key: string) {
-    let song163Key = store.get('song163Key')
+    let song163Key : {[propname : string]: string } = store.get('song163Key') as {}
+    if(!song163Key) {
+        store.set('song163Key',{})
+        song163Key = {}
+    }
     song163Key[filePath] = key
     store.set('song163Key', song163Key)
 }
@@ -270,6 +274,12 @@ export function setSong163Key(filePath: string, key: string) {
 //清空所有的163key（测试）
 export function clear163key() {
     store.set('song163Key', {})
+    return getAllSong163Key()
+}
+
+//返回所有的163key
+export function getAllSong163Key(){
+    return store.get('song163Key')
 }
 
 //返回163key
@@ -280,5 +290,4 @@ export function getSong163Key(filePath: string) {
     } else {
         return null
     }
-
 }

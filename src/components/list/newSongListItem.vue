@@ -62,6 +62,7 @@ let jumpArtists = (id: number) => {
   display: flex;
   margin-top: 20px;
   overflow: hidden;
+  contain: content;
   .other {
     margin-left: 30px;
     flex: 1;

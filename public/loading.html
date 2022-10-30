@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="loading-wrap">
+      <img src="./format.ico" width="70" height="70" alt="img" />
+      <img
+        style="object-fit: cover; float: right"
+        src="./background.png"
+        width="70"
+        height="70"
+        alt="background"
+      />
+      <section class="text">
+        <p>网易云音乐</p>
+        <p>NetEase Cloud Music</p>
+      </section>
+      <div class="loading">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <p class="tip">应用正在启动中，请稍后...</p>
+    </div>
+  </body>
+  <style>
+    body {
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .loading-wrap {
+      width: 250px;
+      height: 250px;
+      padding: 10px;
+      border-radius: 8px;
+      background-color: #f0f0f4;
+    }
+
+    .text {
+      text-align: left;
+      color: rgb(252 64 64);
+      text-shadow: 0 0 21px #ff9b9b;
+      margin: 0px 10px 0px 70px;
+    }
+
+    .loading,
+    .loading > div {
+      margin: 0px 10px 0px 70px;
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    .loading {
+      display: block;
+      font-size: 0;
+      color: #d65f5f;
+    }
+
+    .loading.la-dark {
+      color: #333;
+    }
+
+    .loading > div {
+      display: inline-block;
+      float: none;
+      background-color: currentColor;
+      border: 0 solid currentColor;
+    }
+
+    .loading > div {
+      width: 10px;
+      height: 10px;
+      margin: 4px;
+      border-radius: 100%;
+      animation: ball-beat 0.7s -0.15s infinite linear;
+    }
+
+    .loading > div:nth-child(2n-1) {
+      animation-delay: -0.5s;
+    }
+
+    @keyframes ball-beat {
+      50% {
+        opacity: 0.2;
+        transform: scale(0.75);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .tip {
+      text-align: center;
+      margin-top: 20px;
+      color: rgb(141 133 133);
+    }
+  </style>
+</html>

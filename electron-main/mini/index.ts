@@ -3,7 +3,8 @@ import electron, { ipcMain, app, BrowserWindow } from 'electron';
 import path from 'path'
 import { LOAD_URL } from '../config';
 
-const winURL = process.env.NODE_ENV === "development" ? `https://192.168.3.3:4000/#/desktopMini` : `${LOAD_URL}desktopMini`
+// const winURL = process.env.NODE_ENV === "development" ? `https://192.168.3.3:4000/#/desktopMini` : `${LOAD_URL}desktopMini`
+const winURL = `https://localhost:4000/#/desktopMini`
 let win: BrowserWindow
 
 const createMiniWindow = function (BrowserWindow) {
@@ -38,7 +39,15 @@ const createMiniWindow = function (BrowserWindow) {
         },
     };
     win = new BrowserWindow(obj);
-    win.loadURL(winURL);
+
+    if (app.isPackaged) {
+        win.loadFile(path.join(__dirname, "../index.html"),{
+            hash : 'desktopMini'
+        });
+    } else {
+        win.loadURL(winURL);
+    }
+
     // win.webContents.openDevTools();
     return win
 }

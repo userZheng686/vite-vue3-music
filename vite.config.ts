@@ -38,7 +38,7 @@ export default defineConfig({
         vite: {
           build: {
             // For debug
-            // sourcemap: 'inline',
+            sourcemap: 'inline',
             outDir: 'dist/electron-preload',
           },
         },
@@ -102,7 +102,8 @@ export default defineConfig({
     },
     commonjsOptions: {
       transformMixedEsModules: true, 
-    }
+    },
+    sourcemap : true
   },
   optimizeDeps: {
     exclude: ['electron'], // 告诉 Vite 排除预构建 electron，不然会出现 __diranme is not defined

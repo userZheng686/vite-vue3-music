@@ -565,14 +565,14 @@ let getMusicDetail = async () => {
     if (songList.list[songList.currentListIndex]?.songUrl) {
       audioSrc.value =
         "atom:///" + String(songList.list[songList.currentListIndex].songUrl);
-      audio.value.src =
-        "atom:///" + String(songList.list[songList.currentListIndex].songUrl);
+      // audio.value.src =
+      //   "atom:///" + String(songList.list[songList.currentListIndex].songUrl);
     } else {
       let { data } = await getSongUrl(
         Number(songList.list[songList.currentListIndex].id)
       );
       audioSrc.value = data[0].url.replace("http", "https");
-      audio.value.src = data[0].url.replace("http", "https");
+      // audio.value.src = data[0].url.replace("http", "https");
     }
     nextTick(() => {
       if (audio.value) {

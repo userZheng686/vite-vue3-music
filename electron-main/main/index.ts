@@ -4,7 +4,7 @@ import { readDir, readFileMusic, readFileMV, encode163Key } from './read'
 // import { identifyMusic } from './identify'
 import { openFolder, openSong } from './folder'
 import { setStoreDownload } from './download'
-import { setCookie, getCookie, setHistroyDownloadInterrupted, getHistroyDownloadInterrupted, clearHistroyDownloadInterrupted, clearAllHistoryDownloadInterrupted, setDownloadSongs, getDownloadSongs, clearDownloadSongs, getDownloadMVs, clearDownloadMVs, getDownloadPath, setDownloadPath, getCustomDownload, clearCustomDownload, setUserScanFolder, getUserScanFolder, setUserCheckScanFolder, getUserCheckScanFolder, getDownloadVoicePath, getDownloadMVPath, patchUpdateCustomDownload } from './store'
+import { setCookie, getCookie, setHistroyDownloadInterrupted, getHistroyDownloadInterrupted, clearHistroyDownloadInterrupted, clearAllHistoryDownloadInterrupted, setDownloadSongs, getDownloadSongs, clearDownloadSongs, getDownloadMVs, clearDownloadMVs, getDownloadPath, setDownloadPath, getCustomDownload, clearCustomDownload, setUserScanFolder, getUserScanFolder, setUserCheckScanFolder, getUserCheckScanFolder, getDownloadVoicePath, getDownloadMVPath, patchUpdateCustomDownload, getAllSong163Key, clear163key, getSong163Key } from './store'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import { LOAD_URL } from '../config';
 
@@ -19,7 +19,8 @@ interface Queue {
 }
 
 
-const winURL = process.env.NODE_ENV === "development" ? `https://192.168.3.3:4000/#/findMusic` : `${LOAD_URL}findMusic`;
+// const winURL = process.env.NODE_ENV === "development" ? `https://192.168.3.3:4000/#/findMusic` : `${LOAD_URL}findMusic`;
+const winURL = `https://localhost:4000/#/findMusic`
 
 //下载的文件数据(参数 类型(1 歌曲 2 声音 3MV) 文件名 路径)
 let downloadQueue: Queue = {};
@@ -28,29 +29,29 @@ let win: BrowserWindow
 
 let playStatus: boolean = false
 
-let icoIcon = 
+let icoIcon =
     !app.isPackaged ?
-        path.join(__dirname, './public/icon.ico') :
+        path.join(__dirname, '../../public/icon.ico') :
         path.join(__dirname, '../icon.ico')
 
-let prevIcon = 
+let prevIcon =
     !app.isPackaged ?
-        path.join(__dirname, './public/ic_previous.png') :
+        path.join(__dirname, '../../public/ic_previous.png') :
         path.join(__dirname, '../ic_previous.png')
 
 let playIcon =
     !app.isPackaged ?
-        path.join(__dirname, './public/ic_play.png') :
+        path.join(__dirname, '../../public/ic_play.png') :
         path.join(__dirname, '../ic_play.png')
 
 let pauseIcon =
     !app.isPackaged ?
-        path.join(__dirname, './public/ic_pause.png') :
+        path.join(__dirname, '../../public/ic_pause.png') :
         path.join(__dirname, '../ic_pause.png')
-        
+
 let nextIcon =
     !app.isPackaged ?
-        path.join(__dirname, './public/ic_next.png') :
+        path.join(__dirname, '../../public/ic_next.png') :
         path.join(__dirname, '../ic_next.png')
 
 
@@ -89,6 +90,7 @@ const createMainWindow = (browserWindow: typeof BrowserWindow) => {
         autoHideMenuBar: false,
         frame: false,
         width: 1022,
+        show: false,
         height: 670,
         backgroundColor: 'white',
         fullscreen: false,
@@ -113,8 +115,10 @@ const createMainWindow = (browserWindow: typeof BrowserWindow) => {
     win = new BrowserWindow(obj)
 
     if (app.isPackaged) {
-        // win.loadFile(path.join(__dirname, "../index.html"));
-        win.loadURL(winURL);
+        // win.loadURL('Icarus://./index.html/#/findMusic');
+        win.loadFile(path.join(__dirname, "../index.html"), {
+            hash: 'findMusic'
+        });
     } else {
         win.loadURL(winURL);
     }
@@ -126,12 +130,18 @@ const createMainWindow = (browserWindow: typeof BrowserWindow) => {
 
 
     win.once('ready-to-show', () => {
-        win.show()
+        setTimeout(() => {
+            global.loadingWindow.hide()
+            win.show()
+        }, 2000)
+
         setThumbarButtons()
     })
 
 
     win.webContents.openDevTools();
+
+
 
     return win
 }
@@ -145,7 +155,6 @@ app.whenReady().then(() => {
     ipcMain.on('mainShow', () => {
         win.show()
         win.focus()
-
     })
 
     //聚焦
@@ -208,6 +217,22 @@ app.whenReady().then(() => {
         const file = await encode163Key(filePath, JSON.parse(obj))
         return file
     })
+
+    //返回所有的163key
+    ipcMain.handle('getAllSong163Key', () => {
+        return getAllSong163Key()
+    })
+
+    //读取对应路径的163key
+    ipcMain.handle('getSong163Key', (event, filePath: string) => {
+        return getSong163Key(filePath)
+    })
+
+    //清空所有的163key
+    ipcMain.handle('clear163key', () => {
+        return clear163key()
+    })
+
 
     //读取音频文件（识别）
     // ipcMain.handle('identify', async (event, filePath: string) => {

@@ -24,20 +24,20 @@ contextBridge.exposeInMainWorld('desktopMainAPI', {
 
 
 contextBridge.exposeInMainWorld('readAPI', {
-    readDir: async (path: string) => { const file = await ipcRenderer.invoke('readDir', path); return file },
-    readFileMusic: async (filePath: string) => { const file = await ipcRenderer.invoke('readFileMusic', filePath); return file },
-    readFileMV: async (filePath: string) => { const file = await ipcRenderer.invoke('readFileMV', filePath); return file },
-    readMusic: async (filePath: string) => { const metadata = await ipcRenderer.invoke('identify', filePath); return metadata },
-    write163Key: async (filePath: string, obj: string) => await ipcRenderer.invoke('write163Key', filePath, obj)
+    readDir: (path: string) => ipcRenderer.invoke('readDir', path),
+    readFileMusic: (filePath: string) => ipcRenderer.invoke('readFileMusic', filePath),
+    readFileMV: (filePath: string) => ipcRenderer.invoke('readFileMV', filePath),
+    readMusic: (filePath: string) => ipcRenderer.invoke('identify', filePath),
+    write163Key: (filePath: string, obj: string) => ipcRenderer.invoke('write163Key', filePath, obj)
 });
 
 contextBridge.exposeInMainWorld('folderAPI', {
-    getUserScanFolder: async () => await ipcRenderer.invoke('getUserScanFolder'),
-    setUserScanFolder: async (path: string) => await ipcRenderer.invoke('setUserScanFolder', path),
-    getUserCheckScanFolder: async () => await ipcRenderer.invoke('getUserCheckScanFolder'),
-    setUserCheckScanFolder: async (path: string[]) => await ipcRenderer.invoke('setUserCheckScanFolder', path),
-    openFolder: async () => await ipcRenderer.invoke('openFolder'),
-    openSong: async () => await ipcRenderer.invoke('openSong'),
+    getUserScanFolder: () => ipcRenderer.invoke('getUserScanFolder'),
+    setUserScanFolder: (path: string) => ipcRenderer.invoke('setUserScanFolder', path),
+    getUserCheckScanFolder: () => ipcRenderer.invoke('getUserCheckScanFolder'),
+    setUserCheckScanFolder: (path: string[]) => ipcRenderer.invoke('setUserCheckScanFolder', path),
+    openFolder: () => ipcRenderer.invoke('openFolder'),
+    openSong: () => ipcRenderer.invoke('openSong'),
 });
 
 contextBridge.exposeInMainWorld('cookieAPI', {
@@ -46,6 +46,12 @@ contextBridge.exposeInMainWorld('cookieAPI', {
 });
 
 contextBridge.exposeInMainWorld('downloadAPI', {
+    //返回所有的163key
+    getAllSong163Key : () => ipcRenderer.invoke('getAllSong163Key'),
+    //返回对应路径的163key
+    getSong163Key : (filePath : string) => ipcRenderer.invoke('getSong163Key',filePath),
+    //清空所有的163key
+    clear163key : () => ipcRenderer.invoke('clear163key'),
     //获取客户端已经下载好的内容（歌曲 声音 MV）
     getCustomDownload: (type: number) => ipcRenderer.invoke('getCustomDownload', type),
     //批量更新客户端已经下载的数据

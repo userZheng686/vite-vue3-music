@@ -5,7 +5,7 @@ import { LOAD_URL } from '../config';
 export const createTray = function(){
     let { width: screenWidth } = electron.screen.getPrimaryDisplay().size;
     const trayIconPath = !app.isPackaged ?
-        path.join(__dirname, '../public/tray.ico') :
+        path.join(__dirname, '../../public/tray.ico') :
         path.join(__dirname, '../tray.ico')
     
     const appTray = new Tray(trayIconPath);
@@ -38,7 +38,8 @@ export const createTray = function(){
 
 const createTrayWindow = function (bounds : Electron.Rectangle) {
     let win: BrowserWindow
-    const winURL = process.env.NODE_ENV === "development" ? `https://192.168.3.3:4000/#/tray` : `${LOAD_URL}tray`
+    // const winURL = process.env.NODE_ENV === "development" ? `https://192.168.3.3:4000/#/tray` : `${LOAD_URL}tray`
+    const winURL =  `https://localhost:4000/#/tray`
     const obj = {
         width: 240,
         height: 360,
@@ -69,7 +70,15 @@ const createTrayWindow = function (bounds : Electron.Rectangle) {
         },
     };
     win = new BrowserWindow(obj);
-    win.loadURL(winURL);
+    
+    if (app.isPackaged) {
+        win.loadFile(path.join(__dirname, "../index.html"),{
+            hash : 'tray'
+        });
+    } else {
+        win.loadURL(winURL);
+    }
+
     // win.webContents.openDevTools();
 
     win.on("blur", () => {
