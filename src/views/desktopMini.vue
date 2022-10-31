@@ -259,7 +259,7 @@ let computedIsFm = computed(() => {
 });
 
 let initDrag = async function () {
-  let { width, height } = await window.desktopLyricAPI.getBounds();
+  let { width, height } = await window.desktopMiniAPI.getBounds();
   let biasX = 0;
   let biasY = 0;
 

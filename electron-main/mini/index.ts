@@ -11,10 +11,8 @@ const createMiniWindow = function (BrowserWindow) {
     const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
 
     const obj = {
-        // maxHeight: 80,
         width: 374,
         height: 450,
-        // height: 100,
         show: false,
         frame: false,
         resizable: false,
@@ -52,42 +50,38 @@ const createMiniWindow = function (BrowserWindow) {
     return win
 }
 
-app.whenReady().then(() => {
+ipcMain.on('miniHide', () => {
+    win.hide()
+})
 
+ipcMain.on('miniShow', () => {
+    win.show()
+    win.focus()
 
-    ipcMain.on('miniHide', () => {
-        win.hide()
+})
+
+ipcMain.handle('miniGetBounds', (event) => {
+    return win.getBounds()
+})
+
+ipcMain.handle('miniSetBounds', (event, param) => {
+    let { x, y, width, height } = param
+    return win.setBounds({
+        x,
+        y,
+        width,
+        height
     })
+})
 
-    ipcMain.on('miniShow', () => {
-        win.show()
-        win.focus()
-
-    })
-
-    ipcMain.handle('miniGetBounds', (event) => {
-        return win.getBounds()
-    })
-
-    ipcMain.handle('miniSetBounds', (event, param) => {
-        let { x, y, width, height } = param
-        return win.setBounds({
-            x,
-            y,
-            width,
-            height
-        })
-    })
-
-    ipcMain.handle('miniSetSize', (event, param) => {
-        let { width, height } = param
-        win.setResizable(true)
-        win.setSize(
-            width,
-            height
-        )
-        win.setResizable(false)
-    })
+ipcMain.handle('miniSetSize', (event, param) => {
+    let { width, height } = param
+    win.setResizable(true)
+    win.setSize(
+        width,
+        height
+    )
+    win.setResizable(false)
 })
 
 

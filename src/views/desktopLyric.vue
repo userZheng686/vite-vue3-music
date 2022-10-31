@@ -2,7 +2,7 @@
   <!--歌词弹窗-->
   <div
     class="lyric--dialog"
-    ref="desktop"
+    ref="desktopLyric"
     :class="{ 'lyric--noLock': !lockLyric, 'lyric--lock': lockLyric }"
   >
     <!--弹窗按钮-->
@@ -103,7 +103,7 @@ import {
   setPrevSong,
 } from "@/localStorage/set";
 
-const desktop = ref<null | HTMLElement>(null);
+const desktopLyric = ref<null | HTMLElement>(null);
 
 //动画效果
 let yrcLoad = ref<boolean>(false);
@@ -194,8 +194,8 @@ let initDrag = async function () {
     });
   };
 
-  if (desktop.value) {
-    desktop.value.addEventListener("mousedown", async function (e) {
+  if (desktopLyric.value) {
+    desktopLyric.value.addEventListener("mousedown", async function (e) {
       let { width: width1, height: height1 } = await window.desktopLyricAPI.getBounds();
       width = width1;
       height = height1;
@@ -203,22 +203,22 @@ let initDrag = async function () {
         case 0:
           biasX = e.x;
           biasY = e.y;
-          desktop.value.addEventListener("mousemove", moveEvent);
+          desktopLyric.value.addEventListener("mousemove", moveEvent);
           break;
         case 2:
           break;
       }
     });
 
-    desktop.value.addEventListener("mouseup", (e) => {
+    desktopLyric.value.addEventListener("mouseup", (e) => {
       biasX = 0;
       biasY = 0;
-      desktop.value.removeEventListener("mousemove", moveEvent);
+      desktopLyric.value.removeEventListener("mousemove", moveEvent);
     });
-    desktop.value.addEventListener("mouseleave", (e) => {
+    desktopLyric.value.addEventListener("mouseleave", (e) => {
       biasX = 0;
       biasY = 0;
-      desktop.value.removeEventListener("mousemove", moveEvent);
+      desktopLyric.value.removeEventListener("mousemove", moveEvent);
     });
   }
 };
@@ -230,8 +230,8 @@ onMounted(() => {
 
 <style lang="scss">
 body {
-  min-width: 300px;
-  min-height: 80px;
+  min-width: auto;
+  min-height: auto;
 }
 
 #app {

@@ -11,13 +11,12 @@ const createLyricWindow = function (BrowserWindow) {
     const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
 
     const obj = {
-        // maxHeight: 80,
         width: 868,
         height: 168,
         show: false,
         frame: false,
         resizable: false,
-        movable: true,
+        movable: false,
         y: height - 150,
         fullscreenable: false,
         minimizable: false,
@@ -49,40 +48,40 @@ const createLyricWindow = function (BrowserWindow) {
     return win
 }
 
-app.whenReady().then(() => {
-    ipcMain.on('lyricHide', () => {
-        win.hide()
-    })
 
-    ipcMain.on('lyricShow', () => {
-        win.show()
-        win.focus()
-    })
+ipcMain.on('lyricHide', () => {
+    win.hide()
+})
 
-    ipcMain.handle('lyricGetBounds', (event) => {
-        return win.getBounds()
-    })
+ipcMain.on('lyricShow', () => {
+    win.show()
+    win.focus()
+})
 
-    ipcMain.handle('lyricSetBounds', (event, param) => {
-        let { x, y, width, height } = param
-        return win.setBounds({
-            x,
-            y,
-            width,
-            height
-        })
-    })
+ipcMain.handle('lyricGetBounds', (event) => {
+    return win.getBounds()
+})
 
-    ipcMain.handle('lyricSetSize', (event, param) => {
-        let { width, height } = param
-        win.setResizable(true)
-        win.setSize(
-            width,
-            height
-        )
-        win.setResizable(false)
+ipcMain.handle('lyricSetBounds', (event, param) => {
+    let { x, y, width, height } = param
+    return win.setBounds({
+        x,
+        y,
+        width,
+        height
     })
 })
+
+ipcMain.handle('lyricSetSize', (event, param) => {
+    let { width, height } = param
+    win.setResizable(true)
+    win.setSize(
+        width,
+        height
+    )
+    win.setResizable(false)
+})
+
 
 app.commandLine.appendSwitch('wm-window-animations-disabled');
 

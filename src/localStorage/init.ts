@@ -114,9 +114,13 @@ export const historyList : Ref<SongDetailSongsItem[]> = useStorage("historyList"
 //歌曲播放规则
 //顺序播放 列表循环 单曲循环 随机播放 心动模式
 export const rule : Ref<string> = useStorage("rule",'0'); 
+rule.value = '0'
+
 
 //当前应用模式 0 完整模式 1 mini模式 2最小化
 export const changeMode : Ref<number> = useStorage("changeMode",0);
+changeMode.value = 0
+
 
 //搜索记录
 export const searchHistoryList : Ref<Array<{
@@ -126,7 +130,10 @@ export const searchHistoryList : Ref<Array<{
 
 //锁歌词
 export const lockLyric : Ref<boolean> = useStorage("lockLyric", false);
+lockLyric.value = false
+
 
 //打开桌面歌词
 export const openLyric : Ref<boolean> = useStorage("openLyric", false);
+openLyric.value = false
 
