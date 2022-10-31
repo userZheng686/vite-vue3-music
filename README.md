@@ -1,3 +1,47 @@
 # vite-vue3-music
-vue3构建的electron云音乐程序
-[![Netlify Status](https://api.netlify.com/api/v1/badges/80056bf0-069e-440c-a736-1781a1132187/deploy-status)](https://app.netlify.com/sites/neteasemusic/deploys)
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/80056bf0-069e-440c-a736-1781a1132187/deploy-status)](https://app.netlify.com/sites/neteasemusic/deploys) ![License](https://camo.githubusercontent.com/8d9f0c2c8232cb73a75fe504626eefdd12aa61b7fb40a5a539fd8faed7bfe876/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6963656e73652f7472617a796e2f69656173654d757369632e7376673f7374796c653d666c61742d737175617265)
+
+仿网易云音乐，目前支持Web/客户端，客户端目前仅支持Windows端。以后会支持Mac，Linux端。
+
+# 应用主页截图：
+
+![image-20221031120508438](C:\Users\ZERO\AppData\Roaming\Typora\typora-user-images\image-20221031120508438.png)
+
+
+
+# 功能：
+
+- 桌面歌词（客户端）
+- mini模式（客户端）
+- 自定义托盘右键菜单（客户端）
+- 任务栏缩略图，歌曲操作（客户端）
+- 黑夜/白天模式
+- 浏览器启动客户端（客户端）
+- 最小化/最大化/关闭应用（客户端）
+- 个性推荐，专属定制，歌手，列表模式切换，播客，视频，关注，话题，直播，私人FM，私信，本地歌曲匹配（客户端），音乐匹配（客户端），下载，最近播放，音乐云盘，收藏，歌单，粉丝，关注，动态，歌曲，搜索，高亮显示搜索关键词
+- 心动模式，下一首播放，上一首播放，列表/随机/单曲/顺序循环，单曲播放，播放全部（列表）
+- 右键菜单，对于每一个页面都有不一样的右键菜单
+- 首页栏目调整（组件拖拽）
+- 启动页（客户端）
+- ...
+
+# 未来开发的功能:
+
+- [ ] 音频可视化
+- [ ] 手动/自动检查更新
+- [ ] 自定义安装界面
+- [x] 离线/在线检测与桌面通知
+- [ ] 拖拽播放
+- [ ] 文件关联
+- [ ] 快捷键
+- [ ] ...
+
+# 技术栈：
+
+
+
+# 系统一些截图：
+
+# 如何开始：
+

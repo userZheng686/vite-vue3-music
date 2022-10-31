@@ -10,6 +10,7 @@ import './mini.js'
 
 
 contextBridge.exposeInMainWorld('desktopMainAPI', {
+    notification : (title : string,body : string,status : boolean) => ipcRenderer.invoke('notification',{title,body,status}),
     hide: () => ipcRenderer.send('mainHide'),
     show: () => ipcRenderer.send('mainShow'),
     minimize: () => ipcRenderer.send('minimize'),

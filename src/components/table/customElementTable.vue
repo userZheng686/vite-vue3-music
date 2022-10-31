@@ -489,6 +489,7 @@ let updateLikes = (id: number) => {
 
 //跳转专辑详情
 let jumpAlbumDetail = (id: number) => {
+  if (!id) return;
   router.push({
     path: "/albumDetail",
     query: {

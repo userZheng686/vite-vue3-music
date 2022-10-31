@@ -5,6 +5,28 @@ import { setInstanceRouter } from "@/contextMenu/routerInstance";
 
 let router = useRouter();
 let locale = zhCn;
+let count = 0;
+
+let getOnlineStatus = () => {
+  let status = navigator.onLine;
+  if (window.desktopMainAPI.notification) {
+    window.desktopMainAPI.notification(
+      "网易云音乐",
+      `${status ? "网络连接成功" : "网络连接失败，请检查你的网络是否有问题?"}`,
+      status
+    );
+    console.log("status", status);
+  }
+};
+
+getOnlineStatus();
+
+window.addEventListener("online", getOnlineStatus);
+window.addEventListener("offline", getOnlineStatus);
+
+// nextTick(() => {
+//   getOnlineStatus();
+// });
 
 setInstanceRouter(router);
 </script>

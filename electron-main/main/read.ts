@@ -165,8 +165,8 @@ let setObj = (filePath: string, decodeJson: decode | null, common: any, format: 
                 name: decodeJson.musicName,
                 fileSize,
                 bitrate: format.bitrate,
-                dt: transTime(format.duration),
-                originDt: parseInt(String(format.duration * 1000)),
+                dt: format.duration * 1000,
+                originDt: format.duration * 1000,
                 from: {
                     name: "我下载的音乐",
                     path: 'localDownload',
@@ -194,8 +194,8 @@ let setObj = (filePath: string, decodeJson: decode | null, common: any, format: 
                 name: common.title ? common.title : '未知名字',
                 fileSize,
                 bitrate: format.bitrate,
-                dt: transTime(format.duration),
-                originDt: parseInt(String(format.duration * 1000)),
+                dt: format.duration * 1000,
+                originDt: format.duration * 1000,
                 from: {
                     name: "我下载的音乐",
                     path: 'localDownload',
@@ -315,19 +315,7 @@ let readFileMusic = async (filePath: string) => {
         }
         return JSON.stringify(obj)
     } else {
-        let obj = await ffmetadata.read(filePath, function (err, data) {
-            let { comment } = data
-            setSong163Key(filePath, comment)
-            if (comment) {
-                decodeJson = decode163Key(comment.substring(22))
-            }
-            if (decodeJson) {
-                obj = setObj(filePath, decodeJson, common, format)
-            } else {
-                obj = setObj(filePath, null, common, format)
-            }
-            return obj
-        })
+        obj = setObj(filePath, null, common, format)
         return JSON.stringify(obj)
     }
 

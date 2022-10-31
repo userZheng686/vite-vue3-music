@@ -74,6 +74,10 @@
           <div class="info__disc__bg"></div>
           <div class="info__disc__cover" ref="cover">
             <div class="disc__img" ref="img" :class="{ play: songStatus }">
+              <DefaultImage
+                :picUrl="computedAlbumPicture(computedSongItem)"
+                :lazy="false"
+              />
               <el-image
                 class="u-img"
                 :src="computedAlbumPicture(computedSongItem)"
@@ -329,12 +333,7 @@ let computedAlbumPicture = computed(() => {
   return function (item: SongDetailSongsItem) {
     if (item) {
       let picUrl = item.al?.picUrl || item.album?.picUrl;
-      if (picUrl) {
-        return (
-          picUrl.replace(/http$/, "https") +
-          "?imageView&enlarge=1&thumbnail=210y210&type=webp"
-        );
-      }
+      return picUrl;
     }
   };
 });

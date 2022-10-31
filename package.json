@@ -122,9 +122,13 @@
     "releaseInfo": {
       "releaseNotes": "版本更新的具体内容"
     },
-    "fileAssociations" : {
-      "ext" : [".mp3",".flac",".mpeg",".MPEG",".wma"]
-    }
+    "fileAssociations" : [
+      {
+        "ext" : [".mp3",".flac",".mpeg",".MPEG",".wma"],
+        "name" : "audio",
+        "role" : "Editor"
+      }
+    ]
   },
   "config": {
     "commitizen": {

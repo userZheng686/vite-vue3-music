@@ -37,6 +37,7 @@
         :size="true"
         :duration="true"
         :artist="true"
+        :contextMenu="contextMenu"
         layout="fixed"
         :setOrigin="setOrigin"
         :total="file.length"
@@ -57,6 +58,8 @@
 import { ref, provide, computed } from "vue";
 import { CaretRight, Search, Refresh } from "@element-plus/icons-vue";
 
+import { contextMenuSong } from "@/contextMenu/song/normal";
+
 //用户选择的文件夹
 import { useFolder } from "@/store/folder";
 
@@ -75,6 +78,7 @@ import { init } from "./useLoadFP";
 import { play } from "@/utils/play";
 
 import emitter from "@/utils/eventBus";
+import { contextMenuLocalSong } from "@/contextMenu/song/local";
 
 //audio
 let matchAudio = ref<null | HTMLAudioElement>(null);
@@ -228,7 +232,7 @@ let normalizeFileName = (dirFilesName: string[]): Promise<string[]> => {
         i = index2;
         let type = items.split(".");
         if (usuallyAudioForm.includes(type[type.length - 1])) {
-          dirFilesName.push(item + "/" + items);
+          dirFilesName.push(item + "\\" + items);
         }
       });
       if (index === folder.checkScanFolder.length - 1 && i === res.length - 1) {
@@ -288,6 +292,15 @@ let matchMusic = () => {
     } else {
     }
     // init();
+  }
+};
+
+//右键菜单
+let contextMenu = ($event: MouseEvent, row: SongDetailSongsItem, index: number) => {
+  if (typeof row.id === "string") {
+    contextMenuLocalSong($event, row);
+  } else {
+    contextMenuSong($event, row, [], false);
   }
 };
 

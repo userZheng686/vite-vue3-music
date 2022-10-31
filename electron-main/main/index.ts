@@ -1,4 +1,4 @@
-import { app, session, ipcMain, shell, DownloadItem, BrowserWindow, nativeImage } from 'electron';
+import { app, session, Notification ,ipcMain, shell, DownloadItem, BrowserWindow, nativeImage } from 'electron';
 import path from 'path'
 import { readDir, readFileMusic, readFileMV, encode163Key } from './read'
 // import { identifyMusic } from './identify'
@@ -28,6 +28,8 @@ let downloadQueue: Queue = {};
 let win: BrowserWindow
 
 let playStatus: boolean = false
+
+let offline : boolean = false
 
 let icoIcon =
     !app.isPackaged ?
@@ -121,6 +123,7 @@ const createMainWindow = (browserWindow: typeof BrowserWindow) => {
         });
     } else {
         win.loadURL(winURL);
+        win.webContents.openDevTools();
     }
 
 
@@ -133,15 +136,9 @@ const createMainWindow = (browserWindow: typeof BrowserWindow) => {
         setTimeout(() => {
             global.loadingWindow.hide()
             win.show()
+            setThumbarButtons()
         }, 2000)
-
-        setThumbarButtons()
     })
-
-
-    win.webContents.openDevTools();
-
-
 
     return win
 }
@@ -192,6 +189,15 @@ app.whenReady().then(() => {
     ipcMain.on('status', (event, status: boolean) => {
         playStatus = status
         setThumbarButtons()
+    })
+
+    //桌面通知
+    ipcMain.handle('notification',(event,option : {title : string,body : string,status: boolean}) => {
+        if(offline === option.status) {
+            return
+        }
+        offline = option.status
+        new Notification({title:option.title, body:option.body, icon: nativeImage.createFromPath(icoIcon)}).show();
     })
 
     //读取目录 一定要用异步的 同步的会undefined

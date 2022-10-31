@@ -17,6 +17,7 @@ export interface desktopMini {
 }
 
 export interface desktopMain {
+    notification : Function;
     show: Function;
     hide: Function;
     focus: Function;
@@ -53,6 +54,9 @@ export interface cookie {
 }
 
 export interface download {
+    getAllSong163Key : Function;
+    getSong163Key : Function;
+    clear163key : Function;
     getCustomDownload: Function;
     getDownloadSongs: Function;
     getDownloadPath: Function;

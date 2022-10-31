@@ -17,7 +17,7 @@ const createLyricWindow = function (BrowserWindow) {
         show: false,
         frame: false,
         resizable: false,
-        movable: false,
+        movable: true,
         y: height - 150,
         fullscreenable: false,
         minimizable: false,
