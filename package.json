@@ -1,5 +1,5 @@
 {
-  "name": "neteasemusic",
+  "name": "neteasecloudmusic",
   "version": "1.0.0",
   "main": "dist/electron-main/index.js",
   "scripts": {
@@ -70,10 +70,10 @@
     "vue-tsc": "^0.3.0"
   },
   "build": {
-    "appId": "com.neteaseCloudMusic.desktop",
-    "productName": "neteaseCloudMusic",
+    "appId": "com.neteasecloudmusic.desktop",
+    "productName": "neteasecloudmusic",
     "asar": true,
-    "copyright": "Copyright © 2022 neteaseCloudMusic",
+    "copyright": "Copyright © 2022 neteasecloudmusic",
     "directories": {
       "output": "release/${version}"
     },
@@ -101,7 +101,7 @@
     },
     "nsis": {
       "oneClick": false,
-      "guid" : "neteaseCloudMusic",
+      "guid" : "neteasecloudmusic",
       "perMachine": false,
       "allowElevation": true,
       "allowToChangeInstallationDirectory": true,

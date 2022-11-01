@@ -244,6 +244,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: rgba(18, 18, 18, 0.5);
 }
 
 .lyric--noLock {

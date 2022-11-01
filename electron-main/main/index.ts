@@ -151,9 +151,17 @@ app.on('open-file',async (event,path) => {
     event.preventDefault()
     let result = await readFileMusic(path)
     win.webContents.send('openFile', JSON.stringify(result))
-
 })
 
+
+app.on('second-instance',async (event,argv) => {
+    // 当用户想要在应用中打开一个文件时发出。 
+    // 事件通常在应用已经打开，并且系统要再次使用该应用打开文件时发出。 
+    // 也会在一个文件被拖到 dock 并且还没有运行的时候发出。 
+    event.preventDefault()
+    let result = await readFileMusic(argv[argv.length-1])
+    win.webContents.send('openFile', JSON.stringify(result))
+})
 
 app.whenReady().then(() => {
     ipcMain.on('mainHide', () => {

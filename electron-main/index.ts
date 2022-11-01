@@ -38,7 +38,7 @@ initProtocolSceme()
 //防止重复打开
 const gotTheLock = app.requestSingleInstanceLock()
 if (!gotTheLock) {
-  app.quit()
+  app.exit()
 }
 
 
