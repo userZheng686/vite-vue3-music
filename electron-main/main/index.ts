@@ -121,6 +121,7 @@ const createMainWindow = (browserWindow: typeof BrowserWindow) => {
         win.loadFile(path.join(__dirname, "../index.html"), {
             hash: 'findMusic'
         });
+        win.webContents.openDevTools();
     } else {
         win.loadURL(winURL);
         win.webContents.openDevTools();
@@ -142,6 +143,16 @@ const createMainWindow = (browserWindow: typeof BrowserWindow) => {
 
     return win
 }
+
+app.on('open-file',async (event,path) => {
+    // 当用户想要在应用中打开一个文件时发出。 
+    // 事件通常在应用已经打开，并且系统要再次使用该应用打开文件时发出。 
+    // 也会在一个文件被拖到 dock 并且还没有运行的时候发出。 
+    event.preventDefault()
+    let result = await readFileMusic(path)
+    win.webContents.send('openFile', JSON.stringify(result))
+
+})
 
 
 app.whenReady().then(() => {

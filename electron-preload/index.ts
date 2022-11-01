@@ -94,6 +94,8 @@ ipcRenderer.on('downloadUtil', (e, value) => {
 
 //实时下载传递过来的参数 这个不确定 由回调函数自己决定
 let downloadParam: any
+//文件打开的回调函数
+let openFileCallback : Function
 /**
  * 更新进度和通知下载分为两个事件 因为进度100不代表下载完毕 需要另行通知渲染进程进行下载
  */
@@ -152,6 +154,7 @@ let onCancelMV = () => {
 
 //因为渲染进程中监听不到主进程发出的事件  所以只能通过回调函数来监听值
 contextBridge.exposeInMainWorld('ipcRenderer', {
+    openFile : (f : Function) => openFileCallback = f,
     updateSongProgress: (f: Function) => updateSongProgressCallback = f,
     completeSongDownload: (f: Function) => completeSongDownloadCallback = f,
     cancelSongDownload: (f: Function) => cancelSongDownloadCallback = f,
@@ -163,6 +166,13 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
     pause: (f: Function) => pauseCallback = f,
     next: (f: Function) => nextCallback = f,
     updateStatus : (status : string) => ipcRenderer.send('status', status),
+})
+
+//文件打开
+ipcRenderer.on('openFile',(e,value) => {
+    let result = JSON.parse(value)
+    openFileCallback && openFileCallback(result)
+    console.log('result',result)
 })
 
 //上一首
@@ -188,6 +198,7 @@ ipcRenderer.on('next',(e,value) => {
     nextCallback && nextCallback()
     console.log('next')
 })
+
 
 
 //更新歌曲下载进度

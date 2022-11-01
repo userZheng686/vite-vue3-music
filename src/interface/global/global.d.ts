@@ -74,6 +74,7 @@ export interface download {
 }
 
 export interface ipcRenderer {
+    openFile : Function;
     updateSongProgress: Function;
     completeSongDownload: Function;
     cancelSongDownload: Function;
