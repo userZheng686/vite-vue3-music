@@ -211,7 +211,7 @@ let initJson = (parseJson: any, uid: number, id: number) => {
       },
     };
   }
-  if (parseJson.program) {
+  if (parseJson.program && parseJson.program.mainSong) {
     //电台
     parseJson.program.mainSong.radio = parseJson.program.radio;
     //电台节目id

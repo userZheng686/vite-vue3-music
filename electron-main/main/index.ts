@@ -121,7 +121,7 @@ const createMainWindow = (browserWindow: typeof BrowserWindow) => {
         win.loadFile(path.join(__dirname, "../index.html"), {
             hash: 'findMusic'
         });
-        win.webContents.openDevTools();
+        // win.webContents.openDevTools();
     } else {
         win.loadURL(winURL);
         win.webContents.openDevTools();

@@ -32,6 +32,11 @@
             <ArrowRight />
           </el-icon>
         </button>
+        <button class="histry--circle" style="margin-left: 10px" @click="reload">
+          <el-icon>
+            <RefreshRight />
+          </el-icon>
+        </button>
       </div>
       <!--搜索栏 closeSuggest-->
       <div class="bar--search">
@@ -338,6 +343,11 @@ let backHome = () => {
 //前进
 let go = (n: number): void => {
   router.go(n);
+};
+
+//刷新
+let reload = () => {
+  location.reload();
 };
 
 //定时器

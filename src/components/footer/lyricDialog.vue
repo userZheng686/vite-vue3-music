@@ -202,6 +202,7 @@ let getLyricWords = async (id: number | string) => {
         if (item.replace(/\[.*\]/g, "").length === 0) return false;
         else return true;
       });
+      console.log(formatYrc, "formatYrc");
       yrcWords.value = formatYrc;
     } else {
       yrcWords.value = [];

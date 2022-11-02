@@ -42,35 +42,17 @@
       <span> - </span>
       <span v-for="(items, index) in computedArtists" :key="items.id">
         <span>{{ index > 0 ? " / " : "" }}</span>
-        <span>{{ items.name }}</span>
+        <span>{{ items?.name }}</span>
       </span>
     </div>
     <!--歌词-->
     <div class="lyric--words">
       <div v-if="isLightMusic"><span class="title">纯音乐，请欣赏</span></div>
-      <div
-        v-for="item in computedLyricList"
-        :key="item.text"
-        class="text"
-        :class="{ load: yrcLoad }"
-      >
+      <div v-for="item in computedLyricList" :key="item.text" class="text">
         {{ item.text.replace(/\[.*\]/, "") }}
       </div>
-      <div
-        v-for="item in computedTranslateLyricList"
-        :key="item.text"
-        class="text"
-        :class="{ load: yrcLoad }"
-      >
+      <div v-for="item in computedTranslateLyricList" :key="item.text" class="text2">
         {{ item.text.replace(/\[.*\]/, "") }}
-      </div>
-      <div class="t2">
-        <div v-for="item in computedLyricList" :key="item.text" class="text">
-          {{ item.text.replace(/\[.*\]/, "") }}
-        </div>
-        <div v-for="item in computedTranslateLyricList" :key="item.text" class="text">
-          {{ item.text.replace(/\[.*\]/, "") }}
-        </div>
       </div>
     </div>
   </div>
@@ -105,45 +87,36 @@ import {
 
 const desktopLyric = ref<null | HTMLElement>(null);
 
-//动画效果
-let yrcLoad = ref<boolean>(false);
-//动画持续时间
-let yrcTime = ref<string>("0.1s");
-//动画开始位置（百分比）
-let yrcStartPrecent = ref<string>("0%");
-
 let close = () => {
   openLyric.value = false;
 };
 
-//监听时间
-watch(
-  () => lrcWords.value,
-  (val) => {
-    yrcStartPrecent.value = "0%";
-    yrcLoad.value = false;
-    val.forEach((item) => {
-      if (item.show) {
-        yrcTime.value = item.currentTime / 1000 + "s";
-      }
-      yrcLoad.value = true;
-    });
-  }
-);
-
 watch(
   () => audioTime.value,
   (val) => {
-    lrcWords.value.forEach((item) => {
-      if (item.show) {
-        let percent = (Number(val) - item.startTime / 1000) / (item.currentTime / 1000);
-        nextTick(() => {
-          yrcStartPrecent.value = parseInt(String(percent * 100)) + "%";
-        });
+    let item = lrcWords.value.filter((item) => item.show);
+    if (item && item.length) {
+      let dom = document.querySelector(".text");
+      let dom2 = document.querySelector(".text2");
+      let { startTime, currentTime, text } = item[0];
+      let percent = ((val - startTime) / currentTime) * 100;
+      if (dom && dom2) {
+        //后续优化 有比较明显的卡顿问题
+        initialDom(dom, percent);
+        initialDom(dom2, percent);
       }
-    });
+    }
   }
 );
+
+let initialDom = (dom: Element, percent: number) => {
+  window.requestAnimationFrame(() => {
+    dom.style.backgroundImage =
+      "-webkit-linear-gradient(top, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 100%), -webkit-linear-gradient(left, #f00 " +
+      percent +
+      "%, #cdcdf7 0%)";
+  });
+};
 
 let computedAlias = computed(() => {
   return function (item: SongDetailSongsItem) {
@@ -158,6 +131,12 @@ let computedAlias = computed(() => {
     } else {
       return "";
     }
+  };
+});
+
+let computedLyricText = computed(() => {
+  return function (item: string) {
+    return item.replace(/\[.*\]/, "");
   };
 });
 
@@ -300,52 +279,38 @@ body {
   text-shadow: 1px 1px 5px #c62f2f, 1px -1px 0px #c62f2f;
 }
 
-@keyframes scan {
-  0% {
-    background-size: 0% 100%;
-  }
-
-  100% {
-    background-size: 100% 100%;
-  }
-}
-
 //弹窗歌词
 .lyric--words {
   box-sizing: border-box;
   margin: 10px;
   padding: 0 15px;
   font-size: 22px;
-  /* color: white; */
-  /* text-shadow: 1px 1px 5px #c62f2f, 1px -1px 3px #c62f2f; */
-
   font-family: "Microsoft JhengHei", "明黑", Arial, Helvetica;
   text-indent: 2px;
   overflow-x: auto;
   text-align: center;
   position: relative;
+  color: white;
 
-  .text {
-    background: white -webkit-linear-gradient(top, #c62f2f, #c62f2f) no-repeat 0 0;
-    -webkit-text-fill-color: transparent;
+  .text,
+  .text2 {
+    position: relative;
+    background: -webkit-linear-gradient(
+        top,
+        rgba(255, 255, 255, 0.5) 0%,
+        rgba(255, 255, 255, 0) 100%
+      ),
+      -webkit-linear-gradient(left, #f00 0%, #cdcdf7 0%);
+    margin: 0;
     -webkit-background-clip: text;
-    transition-timing-function: linear;
-    background-size: 0% 100%;
+    -webkit-text-fill-color: transparent;
+    -webkit-filter: drop-shadow(0px 0px 1px #f00);
   }
 
   .t2 {
     position: absolute;
     top: 0;
     z-index: -1;
-  }
-
-  .t2 .text {
-    text-shadow: 1px 1px 5px #c62f2f, 1px -1px 0px #c62f2f;
-  }
-
-  .load {
-    background-size: 100% 100%;
-    animation: scan v-bind(yrcTime) linear;
   }
 }
 </style>

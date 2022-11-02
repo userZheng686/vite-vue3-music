@@ -43,8 +43,9 @@ const createLyricWindow = function (BrowserWindow) {
         });
     } else {
         win.loadURL(winURL);
+        win.webContents.openDevTools();
     }
-    // win.webContents.openDevTools();
+    
     return win
 }
 
