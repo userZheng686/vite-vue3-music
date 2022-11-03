@@ -76,9 +76,10 @@
     "appId": "com.neteasecloudmusic.desktop",
     "productName": "neteasecloudmusic",
     "asar": true,
+    "extends": null,
     "copyright": "Copyright © 2022 neteasecloudmusic",
     "directories": {
-      "output": "release/${version}"
+      "output": "release"
     },
     "files": [
       "dist",
@@ -114,8 +115,9 @@
     },
     "publish": [
       {
-        "provider": "generic",
-        "url": "https://neteasemusic.netlify.app/#/upgrade"
+        "provider": "github",
+        "owner": "userZheng686",
+        "repo": "vite-vue3-music"
       }
     ],
     "releaseInfo": {
