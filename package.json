@@ -4,7 +4,7 @@
   "main": "dist-electron/main/index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development vite",
-    "build": "rimraf dist && rimraf release && vite build && electron-builder",
+    "build": "rimraf dist && rimraf release && vite build && electron-builder -p always",
     "package": "electron-builder",
     "serve": "vite preview",
     "git": "git add . && git cz && git push"
