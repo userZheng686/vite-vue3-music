@@ -20,6 +20,7 @@
     "crypto-js": "^4.1.1",
     "default-passive-events": "^2.0.0",
     "electron-store": "^8.0.2",
+    "electron-updater": "^5.3.0",
     "element-china-area-data": "^5.0.2",
     "element-plus": "^2.2.6",
     "ffmetadata": "^1.7.0",
@@ -81,27 +82,54 @@
       "dist"
     ],
     "mac": {
+      "category": "public.app-category.productivity",
+      "icon": "./public/icon.ico",
       "artifactName": "${productName}_${version}.${ext}",
       "target": [
-        "dmg"
+        "dmg",
+        "zip"
       ]
+    },
+     "dmg": {  
+        "background": "./public/appdmg.png",
+        "icon": "./public/icon.ico",
+        "iconSize": 100,
+        "contents": [  
+            {
+                "x": 380,
+                "y": 280,
+                "type": "link",
+                "path": "/Applications"
+            },
+            {
+                "x": 110,
+                "y": 280,
+                "type": "file"
+            }
+        ],
+        "window": {
+            "width": 500,
+            "height": 500
+        }
     },
     "win": {
       "icon": "./public/icon.ico",
       "requestedExecutionLevel": "requireAdministrator",
       "target": [
+        "msi",
         {
           "target": "nsis",
           "arch": [
             "x64"
           ]
-        }
+        },
+        "zip"
       ],
       "artifactName": "${productName}_${version}.${ext}"
     },
     "nsis": {
       "oneClick": false,
-      "guid" : "neteasecloudmusic",
+      "guid": "neteasecloudmusic",
       "perMachine": false,
       "allowElevation": true,
       "allowToChangeInstallationDirectory": true,
@@ -122,11 +150,17 @@
     "releaseInfo": {
       "releaseNotes": "版本更新的具体内容"
     },
-    "fileAssociations" : [
+    "fileAssociations": [
       {
-        "ext" : [".mp3",".flac",".mpeg",".MPEG",".wma"],
-        "name" : "audio",
-        "role" : "Editor"
+        "ext": [
+          ".mp3",
+          ".flac",
+          ".mpeg",
+          ".MPEG",
+          ".wma"
+        ],
+        "name": "audio",
+        "role": "Editor"
       }
     ]
   },
