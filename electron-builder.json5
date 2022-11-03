@@ -1,0 +1,98 @@
+/**
+ * @see https://www.electron.build/configuration/configuration
+ */
+
+{
+  "appId": "com.neteasecloudmusic.desktop",
+  "productName": "neteasecloudmusic",
+  "asar": true,
+  "copyright": "Copyright © 2022 neteasecloudmusic",
+  "directories": {
+    "output": "release/${version}"
+  },
+  "files": [
+    "dist",
+    "dist-electron",
+  ],
+  "mac": {
+    "category": "public.app-category.productivity",
+    "icon": "./public/icon.ico",
+    "artifactName": "${productName}_${version}.${ext}",
+    "target": [
+      "dmg",
+      "zip"
+    ]
+  },
+  "dmg": {
+    "background": "./public/appdmg.png",
+    "icon": "./public/icon.ico",
+    "iconSize": 100,
+    "contents": [
+      {
+        "x": 380,
+        "y": 280,
+        "type": "link",
+        "path": "/Applications"
+      },
+      {
+        "x": 110,
+        "y": 280,
+        "type": "file"
+      }
+    ],
+    "window": {
+      "width": 500,
+      "height": 500
+    }
+  },
+  "win": {
+    "icon": "./public/icon.ico",
+    "requestedExecutionLevel": "requireAdministrator",
+    "target": [
+      {
+        "target": "nsis",
+        "arch": [
+          "x64"
+        ]
+      },
+      "zip"
+    ],
+    "artifactName": "${productName}_${version}.${ext}"
+  },
+  "nsis": {
+    "oneClick": false,
+    "guid": "neteasecloudmusic",
+    "perMachine": false,
+    "allowElevation": true,
+    "allowToChangeInstallationDirectory": true,
+    "deleteAppDataOnUninstall": true,
+    "installerIcon": "./public/icon.ico",
+    "uninstallerIcon": "./public/icon.ico",
+    "installerHeaderIcon": "./public/icon.ico",
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "网易云音乐"
+  },
+  "publish": [
+    {
+      "provider": "generic",
+      "url": "https://neteasemusic.netlify.app/#/upgrade"
+    }
+  ],
+  "releaseInfo": {
+    "releaseNotes": "版本更新的具体内容"
+  },
+  "fileAssociations": [
+    {
+      "ext": [
+        ".mp3",
+        ".flac",
+        ".mpeg",
+        ".MPEG",
+        ".wma"
+      ],
+      "name": "audio",
+      "role": "Editor"
+    }
+  ]
+}

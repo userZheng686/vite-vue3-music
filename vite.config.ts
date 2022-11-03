@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import { rmSync } from 'fs'
 import fs from 'fs'
 import vue from '@vitejs/plugin-vue'
 import Icons from 'unplugin-icons/vite'
@@ -6,9 +7,9 @@ import IconsResolver from 'unplugin-icons/resolver'
 import Inspect from 'vite-plugin-inspect'
 import path from 'path'
 
-import electron from "vite-plugin-electron";
-import electronRenderer from "vite-plugin-electron/renderer";
-import polyfillExports from "vite-plugin-electron/polyfill-exports";
+import electron from 'vite-electron-plugin'
+import { customStart, loadViteEnv } from 'vite-electron-plugin/plugin'
+import renderer from 'vite-plugin-electron-renderer'
 import viteCompression from 'vite-plugin-compression'
 
 // 如果编辑器提示 path 模块找不到，则可以安装一下 @types/node -> npm i @types/node -D
@@ -19,33 +20,32 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import { builtinModules } from 'module'
 const pathSrc = path.resolve(__dirname, 'src')
 
+rmSync('dist-electron', { recursive: true, force: true })
+
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
     electron({
-      main: {
-        entry: "electron-main/index.ts", // 主进程文件
-        vite: {
-          build: {
-            outDir: 'dist/electron-main',
-          },
-        },
-      },
-      preload: {
-        input: [path.join(__dirname, "./electron-preload/index.ts")], // 预加载文件
-        vite: {
-          build: {
-            // For debug
-            sourcemap: 'inline',
-            outDir: 'dist/electron-preload',
-          },
-        },
-      },
+       include: ['electron'],
+       transformOptions: {
+         sourcemap: !!process.env.VSCODE_DEBUG,
+       },
+       plugins: [
+         ...(process.env.VSCODE_DEBUG
+           ? [
+             // Will start Electron via VSCode Debug
+             customStart(debounce(() => console.log(/* For `.vscode/.debug.script.mjs` */'[startup] Electron App'))),
+           ]
+           : []),
+           // Allow use `import.meta.env.VITE_SOME_KEY` in Electron-Main
+         loadViteEnv(),
+       ],
+     }),
+    renderer({
+      nodeIntegration: false,
     }),
-    electronRenderer(),
-    polyfillExports(),
     AutoImport({
       // Auto import functions from Vue, e.g. ref, reactive, toRef...
       // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
@@ -92,6 +92,7 @@ export default defineConfig({
     })
   ],
   build: {
+    assetsDir : '',
     emptyOutDir: false, // 必须配置，否则electron相关文件将不会生成build后的文件
     rollupOptions: {
       output: {
@@ -124,6 +125,7 @@ export default defineConfig({
     }
   },
   base: './', // 设置打包路径
+  clearScreen: false,
   server: {
     port: 4000, // 设置服务启动端口号
     open: true, // 设置服务启动时是否自动打开浏览器
@@ -144,3 +146,12 @@ export default defineConfig({
     // }
   }
 })
+
+
+function debounce<Fn extends (...args: any[]) => void>(fn: Fn, delay = 299) {
+  let t: NodeJS.Timeout
+  return ((...args) => {
+    clearTimeout(t)
+    t = setTimeout(() => fn(...args), delay)
+  }) as Fn
+}

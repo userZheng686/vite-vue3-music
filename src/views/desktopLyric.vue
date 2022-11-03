@@ -35,7 +35,7 @@
       </el-icon>
     </div>
     <div class="title">
-      <span>{{ list[currentListIndex].name }}</span>
+      <span>{{ list[currentListIndex]?.name }}</span>
       <span v-if="computedAlias(list[currentListIndex])"
         >({{ computedAlias(list[currentListIndex]) }})</span
       >
@@ -48,11 +48,11 @@
     <!--歌词-->
     <div class="lyric--words">
       <div v-if="isLightMusic"><span class="title">纯音乐，请欣赏</span></div>
-      <div v-for="item in computedLyricList" :key="item.text" class="text">
-        {{ item.text.replace(/\[.*\]/, "") }}
+      <div class="text">
+        {{ computedLyricList[0]?.text?.replace(/\[.*\]/, "") }}
       </div>
-      <div v-for="item in computedTranslateLyricList" :key="item.text" class="text2">
-        {{ item.text.replace(/\[.*\]/, "") }}
+      <div class="text2">
+        {{ computedTranslateLyricList[0]?.text?.replace(/\[.*\]/, "") }}
       </div>
     </div>
   </div>

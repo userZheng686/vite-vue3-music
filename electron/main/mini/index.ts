@@ -33,13 +33,13 @@ const createMiniWindow = function (BrowserWindow) {
             enableRemoteModule: true,
             contextIsolation: true,
             devTools: false,
-            preload: path.join(__dirname, '../electron-preload/index.js')
+            preload: path.join(__dirname, '../../preload/index.js')
         },
     };
     win = new BrowserWindow(obj);
 
     if (app.isPackaged) {
-        win.loadFile(path.join(__dirname, "../index.html"),{
+        win.loadFile(path.join(__dirname, "../../../dist/index.html"),{
             hash : 'desktopMini'
         });
     } else {

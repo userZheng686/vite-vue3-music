@@ -6,7 +6,7 @@ export const createTray = function(){
     let { width: screenWidth } = electron.screen.getPrimaryDisplay().size;
     const trayIconPath = !app.isPackaged ?
         path.join(__dirname, '../../public/tray.ico') :
-        path.join(__dirname, '../tray.ico')
+        path.join(__dirname, '../../../dist/tray.ico')
     
     const appTray = new Tray(trayIconPath);
     
@@ -66,13 +66,13 @@ const createTrayWindow = function (bounds : Electron.Rectangle) {
             enableRemoteModule: true,
             contextIsolation: true,
             devTools: true,
-            preload: path.join(__dirname, '../electron-preload/index.js')
+            preload: path.join(__dirname, '../../preload/index.js')
         },
     };
     win = new BrowserWindow(obj);
     
     if (app.isPackaged) {
-        win.loadFile(path.join(__dirname, "../index.html"),{
+        win.loadFile(path.join(__dirname, "../../../dist/index.html"),{
             hash : 'tray'
         });
     } else {

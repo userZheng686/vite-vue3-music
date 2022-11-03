@@ -34,27 +34,27 @@ let offline : boolean = false
 let icoIcon =
     !app.isPackaged ?
         path.join(__dirname, '../../public/icon.ico') :
-        path.join(__dirname, '../icon.ico')
+        path.join(__dirname, '../../../dist/icon.ico')
 
 let prevIcon =
     !app.isPackaged ?
         path.join(__dirname, '../../public/ic_previous.png') :
-        path.join(__dirname, '../ic_previous.png')
+        path.join(__dirname, '../../../dist/ic_previous.png')
 
 let playIcon =
     !app.isPackaged ?
         path.join(__dirname, '../../public/ic_play.png') :
-        path.join(__dirname, '../ic_play.png')
+        path.join(__dirname, '../../../dist/ic_play.png')
 
 let pauseIcon =
     !app.isPackaged ?
         path.join(__dirname, '../../public/ic_pause.png') :
-        path.join(__dirname, '../ic_pause.png')
+        path.join(__dirname, '../../../dist/ic_pause.png')
 
 let nextIcon =
     !app.isPackaged ?
         path.join(__dirname, '../../public/ic_next.png') :
-        path.join(__dirname, '../ic_next.png')
+        path.join(__dirname, '../../../dist/ic_next.png')
 
 
 const setThumbarButtons = () => {
@@ -107,7 +107,7 @@ const createMainWindow = (browserWindow: typeof BrowserWindow) => {
             nodeIntegration: true,
             devTools: true,
             webSecurity: false,
-            preload: path.join(__dirname, '../electron-preload/index.js')
+            preload: path.join(__dirname, '../../preload/index.js')
         },
         minimizable: true,
         maximizable: true,
@@ -118,10 +118,10 @@ const createMainWindow = (browserWindow: typeof BrowserWindow) => {
 
     if (app.isPackaged) {
         // win.loadURL('Icarus://./index.html/#/findMusic');
-        win.loadFile(path.join(__dirname, "../index.html"), {
+        win.loadFile(path.join(__dirname, "../../../dist/index.html"), {
             hash: 'findMusic'
         });
-        // win.webContents.openDevTools();
+        win.webContents.openDevTools();
     } else {
         win.loadURL(winURL);
         win.webContents.openDevTools();

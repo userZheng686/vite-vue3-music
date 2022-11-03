@@ -29,13 +29,13 @@ const createLoadingWindow = function (BrowserWindow) {
             enableRemoteModule: true,
             contextIsolation: true,
             devTools: false,
-            preload: path.join(__dirname, '../electron-preload/index.js')
+            preload: path.join(__dirname, '../../preload/index.js')
         },
     };
     win = new BrowserWindow(obj);
 
     if (app.isPackaged) {
-        win.loadFile(path.join(__dirname, "../loading.html"));
+        win.loadFile(path.join(__dirname, "../../../dist/loading.html"));
     } else {
         win.loadFile(winURL);
     }
