@@ -115,9 +115,8 @@
 
 ## 客户端
 
-1. 客户端环境比较特殊，目前使用的插件不能支持electron和vue一起打包，不然会出现require is not defined的问题。这里给的一个解决方案是分别新建两个文件夹，一个是electron-dist，另外一个是electron-build。dist用来放web端打包的代码，build用来存放electron打包的代码。之后都放到dist文件夹，使用npm run package来打包。（可以随你的需求更改打包方法）
-2. release下面按照版本存放文件夹，文件夹里面有安装包和可执行文件。一般测试就是用里面的可执行文件就行了。
-3. 将vite.config.ts中的electron模块启用起来，之后npm run dev ，就能看到electron客户端了。
+1. ~~客户端环境比较特殊，目前使用的插件不能支持electron和vue一起打包，不然会出现require is not defined的问题。这里给的一个解决方案是分别新建两个文件夹，一个是electron-dist，另外一个是electron-build。dist用来放web端打包的代码，build用来存放electron打包的代码。之后都放到dist文件夹，使用npm run package来打包。（可以随你的需求更改打包方法）~~（已解决，目前使用npm run dist命令即可打包）
+2. release下面存放文件夹，文件夹里面有安装包和可执行文件。一般测试就是用里面的可执行文件就行了。
 
 # License
 
