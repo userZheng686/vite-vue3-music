@@ -203,7 +203,8 @@ let closeMenuPopup = () => {
 <style scoped lang="scss">
 .menu {
   position: absolute;
-  top: 54px;
+  top: 35px;
+  left: 0px;
   width: 320px;
   right: 50px;
   max-height: 420px;

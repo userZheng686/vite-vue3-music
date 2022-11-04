@@ -2,11 +2,12 @@
 import os from "os";
 import { contextBridge, ipcRenderer } from 'electron';
 //歌曲列表声明
-import { SongDetailSongsItem } from "i/api/api_song.d";
+import { SongDetailSongsItem } from "i/api/api_song";
 //mv下载声明
-import { downloadItem } from 'i/view/videoDetail.d'
+import { downloadItem } from 'i/view/videoDetail'
 import './lyric.js'
 import './mini.js'
+import './update.js'
 
 
 contextBridge.exposeInMainWorld('desktopMainAPI', {
@@ -21,6 +22,8 @@ contextBridge.exposeInMainWorld('desktopMainAPI', {
     openPathFolder: (path: string) => ipcRenderer.send('openPathFolder', path),
     exit : () => ipcRenderer.send('exit'),
 })
+
+
 
 
 
@@ -85,11 +88,7 @@ contextBridge.exposeInMainWorld('downloadAPI', {
     resumeInterrupted: (item: string) => ipcRenderer.invoke('resumeInterrupted', item),
 })
 
-//接受主进程传进来的下载工具函数
-//更新歌曲下载进度
-ipcRenderer.on('downloadUtil', (e, value) => {
-    console.log('value', value)
-})
+
 
 
 //实时下载传递过来的参数 这个不确定 由回调函数自己决定
@@ -118,6 +117,12 @@ let playCallback : Function
 //下一首
 let nextCallback: Function
 
+//接受主进程传进来的下载工具函数
+//更新歌曲下载进度
+ipcRenderer.on('downloadUtil', (e, value) => {
+    console.log('value', value)
+})
+
 
 //回调 通知渲染进程更新歌曲下载进度
 let onProgressSong = () => {
@@ -125,28 +130,33 @@ let onProgressSong = () => {
         updateSongProgressCallback(downloadParam)
     }
 }
+
 //回调 通知渲染进程歌曲下载完毕
 let onCompleteSong = () => {
     if (Object.keys(downloadParam).length) {
         completeSongDownloadCallback(downloadParam)
     }
 }
+
 //回调 通知渲染进程歌曲取消下载
 let onCancelSong = () => {
     cancelSongDownloadCallback(downloadParam)
 }
+
 //回调 通知渲染进程更新MV下载进度
 let onProgressMV = () => {
     if (Object.keys(downloadParam).length) {
         updateMVProgressCallback(downloadParam)
     }
 }
+
 //回调 通知渲染进程MV下载完毕
 let onCompleteMV = () => {
     if (Object.keys(downloadParam).length) {
         completeMVDownloadCallback(downloadParam)
     }
 }
+
 //回调 通知渲染进程MV取消下载
 let onCancelMV = () => {
     cancelMVDownloadCallback(downloadParam)
@@ -198,8 +208,6 @@ ipcRenderer.on('next',(e,value) => {
     nextCallback && nextCallback()
     console.log('next')
 })
-
-
 
 //更新歌曲下载进度
 ipcRenderer.on('updateSongDownloadProgressing', (e, value) => {

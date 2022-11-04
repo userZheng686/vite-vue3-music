@@ -5,7 +5,7 @@ import { LOAD_URL } from '../config';
 export const createTray = function(){
     let { width: screenWidth } = electron.screen.getPrimaryDisplay().size;
     const trayIconPath = !app.isPackaged ?
-        path.join(__dirname, '../../public/tray.ico') :
+        path.join(__dirname, '../../../public/tray.ico') :
         path.join(__dirname, '../../../dist/tray.ico')
     
     const appTray = new Tray(trayIconPath);

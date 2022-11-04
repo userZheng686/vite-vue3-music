@@ -1,7 +1,16 @@
 {
   "name": "neteasecloudmusic",
   "version": "1.0.0",
+  "author": "userZheng686",
+  "description": "vite-vue3-music",
   "main": "dist-electron/main/index.js",
+  "keywords": [
+    "electron",
+    "vue3",
+    "pinia",
+    "vue-router",
+    "neteasecloudmusic"
+  ],
   "scripts": {
     "dev": "cross-env NODE_ENV=development vite",
     "build" : "rimraf dist && vite build",
@@ -118,7 +127,8 @@
       {
         "provider": "github",
         "owner": "userZheng686",
-        "repo": "vite-vue3-music"
+        "repo": "vite-vue3-music",
+        "releaseType" : "release"
       }
     ],
     "releaseInfo": {

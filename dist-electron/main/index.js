@@ -19,8 +19,10 @@ var import_main = __toESM(require("./main/index"));
 var import_lyric = __toESM(require("./lyric/index"));
 var import_mini = __toESM(require("./mini/index"));
 var import_loading = __toESM(require("./loading/index"));
+var import_update = require("./update");
 var import_tray = require("./tray/index");
 var import_protocol = require("./protocol");
+var import_update2 = __toESM(require("./update/index"));
 const args = [];
 if (!import_electron.app.isPackaged) {
   args.push(import_path.default.resolve(process.argv[1]));
@@ -38,6 +40,7 @@ import_electron.app.whenReady().then(() => {
   global.mainWindow = (0, import_main.default)(import_electron.BrowserWindow);
   global.lyricWindow = (0, import_lyric.default)(import_electron.BrowserWindow);
   global.miniWindow = (0, import_mini.default)(import_electron.BrowserWindow);
+  global.updateWindow = (0, import_update2.default)(import_electron.BrowserWindow);
   (0, import_tray.createTray)();
   import_electron.protocol.registerFileProtocol("atom", (request, callback) => {
     const url = request.url.substr(7);

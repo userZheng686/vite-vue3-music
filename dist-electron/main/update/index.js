@@ -20,53 +20,29 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var stdin_exports = {};
 __export(stdin_exports, {
-  createTray: () => createTray
+  default: () => stdin_default
 });
 module.exports = __toCommonJS(stdin_exports);
 var import_electron = __toESM(require("electron"));
 var import_path = __toESM(require("path"));
-const createTray = function() {
-  let { width: screenWidth } = import_electron.default.screen.getPrimaryDisplay().size;
-  const trayIconPath = !import_electron.app.isPackaged ? import_path.default.join(__dirname, "../../../public/tray.ico") : import_path.default.join(__dirname, "../../../dist/tray.ico");
-  const appTray = new import_electron.Tray(trayIconPath);
-  let trayBounds = appTray.getBounds();
-  let trayWindow = createTrayWindow(trayBounds);
-  appTray.setToolTip("\u7F51\u6613\u4E91\u97F3\u4E50");
-  appTray.on("click", () => {
-    global.mainWindow.show();
-  });
-  appTray.on("right-click", (event, bounds) => {
-    const [trayMenuWidth, trayMenuHeight] = trayWindow.getSize();
-    let { x, y } = import_electron.default.screen.getCursorScreenPoint();
-    if (x + trayMenuWidth > screenWidth) {
-      trayWindow.setPosition(x - trayMenuWidth, y - trayMenuHeight);
-    } else {
-      trayWindow.setPosition(x, y - trayMenuHeight);
-    }
-    trayWindow.show();
-  });
-  return appTray;
-};
-const createTrayWindow = function(bounds) {
-  let win;
-  const winURL = `https://localhost:4000/#/tray`;
+const winURL = `https://localhost:4000/#/desktopUpdate`;
+let win;
+const createUpdateWindow = function(BrowserWindow2) {
+  const { width, height } = import_electron.default.screen.getPrimaryDisplay().workAreaSize;
   const obj = {
-    width: 240,
+    width: 300,
     height: 360,
-    maxWidth: 240,
-    maxHeight: 360,
     show: false,
     frame: false,
     resizable: false,
-    backgroundColor: "white",
     movable: false,
-    y: bounds.y - 310,
-    x: bounds.x,
+    y: height - 150,
     fullscreenable: false,
     minimizable: false,
+    backgroundColor: "#00000000",
     maximizable: false,
     transparent: true,
-    alwaysOnTop: true,
+    alwaysOnTop: false,
     skipTaskbar: true,
     closable: false,
     hasShadow: false,
@@ -75,23 +51,45 @@ const createTrayWindow = function(bounds) {
       nodeIntegration: true,
       enableRemoteModule: true,
       contextIsolation: true,
-      devTools: true,
+      devTools: false,
       preload: import_path.default.join(__dirname, "../../preload/index.js")
     }
   };
-  win = new import_electron.BrowserWindow(obj);
+  win = new BrowserWindow2(obj);
   if (import_electron.app.isPackaged) {
     win.loadFile(import_path.default.join(__dirname, "../../../dist/index.html"), {
-      hash: "tray"
+      hash: "desktopUpdate"
     });
   } else {
     win.loadURL(winURL);
+    win.webContents.openDevTools();
   }
-  win.on("blur", () => {
-    win.hide();
-  });
-  win.on("close", () => {
-    win = null;
-  });
   return win;
 };
+import_electron.ipcMain.on("updateHide", () => {
+  win.hide();
+});
+import_electron.ipcMain.on("updateShow", () => {
+  win.show();
+  win.focus();
+});
+import_electron.ipcMain.handle("updateGetBounds", (event) => {
+  return win.getBounds();
+});
+import_electron.ipcMain.handle("updateSetBounds", (event, param) => {
+  let { x, y, width, height } = param;
+  return win.setBounds({
+    x,
+    y,
+    width,
+    height
+  });
+});
+import_electron.ipcMain.handle("updateSetSize", (event, param) => {
+  let { width, height } = param;
+  win.setResizable(true);
+  win.setSize(width, height);
+  win.setResizable(false);
+});
+import_electron.app.commandLine.appendSwitch("wm-window-animations-disabled");
+var stdin_default = createUpdateWindow;

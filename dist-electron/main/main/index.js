@@ -34,11 +34,11 @@ let downloadQueue = {};
 let win;
 let playStatus = false;
 let offline = false;
-let icoIcon = !import_electron.app.isPackaged ? import_path.default.join(__dirname, "../../public/icon.ico") : import_path.default.join(__dirname, "../../../dist/icon.ico");
-let prevIcon = !import_electron.app.isPackaged ? import_path.default.join(__dirname, "../../public/ic_previous.png") : import_path.default.join(__dirname, "../../../dist/ic_previous.png");
-let playIcon = !import_electron.app.isPackaged ? import_path.default.join(__dirname, "../../public/ic_play.png") : import_path.default.join(__dirname, "../../../dist/ic_play.png");
-let pauseIcon = !import_electron.app.isPackaged ? import_path.default.join(__dirname, "../../public/ic_pause.png") : import_path.default.join(__dirname, "../../../dist/ic_pause.png");
-let nextIcon = !import_electron.app.isPackaged ? import_path.default.join(__dirname, "../../public/ic_next.png") : import_path.default.join(__dirname, "../../../dist/ic_next.png");
+let icoIcon = !import_electron.app.isPackaged ? import_path.default.join(__dirname, "../../../public/icon.ico") : import_path.default.join(__dirname, "../../../dist/icon.ico");
+let prevIcon = !import_electron.app.isPackaged ? import_path.default.join(__dirname, "../../../public/ic_previous.png") : import_path.default.join(__dirname, "../../../dist/ic_previous.png");
+let playIcon = !import_electron.app.isPackaged ? import_path.default.join(__dirname, "../../../public/ic_play.png") : import_path.default.join(__dirname, "../../../dist/ic_play.png");
+let pauseIcon = !import_electron.app.isPackaged ? import_path.default.join(__dirname, "../../../public/ic_pause.png") : import_path.default.join(__dirname, "../../../dist/ic_pause.png");
+let nextIcon = !import_electron.app.isPackaged ? import_path.default.join(__dirname, "../../../public/ic_next.png") : import_path.default.join(__dirname, "../../../dist/ic_next.png");
 const setThumbarButtons = () => {
   win.setThumbarButtons([
     {

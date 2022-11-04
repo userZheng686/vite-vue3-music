@@ -8,6 +8,18 @@ export interface desktopLyric {
     hide: Function;
 }
 
+export interface desktopUpdate {
+    getBounds: Function;
+    setBounds: Function;
+    setSize: Function;
+    show: Function;
+    hide: Function;
+    message : Function;
+    checkForUpdate : Function;
+    checkAppVersion : Function;
+    downloadUpdate : Function;
+}
+
 export interface desktopMini {
     getBounds: Function;
     setBounds: Function;
@@ -15,6 +27,8 @@ export interface desktopMini {
     show: Function;
     hide: Function;
 }
+
+
 
 export interface desktopMain {
     notification : Function;
@@ -118,6 +132,7 @@ declare global {
         desktopMainAPI: desktopMain;
         playAPICallback: playAPICallback;
         playAPI: playAPI;
+        desktopUpdateAPI : desktopUpdate;
     }
     interface Interrupted {
         eTag: string | undefined;

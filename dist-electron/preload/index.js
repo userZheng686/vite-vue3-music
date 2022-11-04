@@ -1,6 +1,7 @@
 var import_electron = require("electron");
 var import_lyric = require("./lyric.js");
 var import_mini = require("./mini.js");
+var import_update = require("./update.js");
 import_electron.contextBridge.exposeInMainWorld("desktopMainAPI", {
   notification: (title, body, status) => import_electron.ipcRenderer.invoke("notification", { title, body, status }),
   hide: () => import_electron.ipcRenderer.send("mainHide"),
@@ -52,9 +53,6 @@ import_electron.contextBridge.exposeInMainWorld("downloadAPI", {
   clearAllHistoryDownloadInterrupted: () => import_electron.ipcRenderer.invoke("clearAllHistoryDownloadInterrupted"),
   resumeInterrupted: (item) => import_electron.ipcRenderer.invoke("resumeInterrupted", item)
 });
-import_electron.ipcRenderer.on("downloadUtil", (e, value) => {
-  console.log("value", value);
-});
 let downloadParam;
 let openFileCallback;
 let updateSongProgressCallback;
@@ -67,6 +65,9 @@ let prevCallback;
 let pauseCallback;
 let playCallback;
 let nextCallback;
+import_electron.ipcRenderer.on("downloadUtil", (e, value) => {
+  console.log("value", value);
+});
 let onProgressSong = () => {
   if (Object.keys(downloadParam).length) {
     updateSongProgressCallback(downloadParam);

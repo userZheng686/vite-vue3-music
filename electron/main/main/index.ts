@@ -33,27 +33,27 @@ let offline : boolean = false
 
 let icoIcon =
     !app.isPackaged ?
-        path.join(__dirname, '../../public/icon.ico') :
+        path.join(__dirname, '../../../public/icon.ico') :
         path.join(__dirname, '../../../dist/icon.ico')
 
 let prevIcon =
     !app.isPackaged ?
-        path.join(__dirname, '../../public/ic_previous.png') :
+        path.join(__dirname, '../../../public/ic_previous.png') :
         path.join(__dirname, '../../../dist/ic_previous.png')
 
 let playIcon =
     !app.isPackaged ?
-        path.join(__dirname, '../../public/ic_play.png') :
+        path.join(__dirname, '../../../public/ic_play.png') :
         path.join(__dirname, '../../../dist/ic_play.png')
 
 let pauseIcon =
     !app.isPackaged ?
-        path.join(__dirname, '../../public/ic_pause.png') :
+        path.join(__dirname, '../../../public/ic_pause.png') :
         path.join(__dirname, '../../../dist/ic_pause.png')
 
 let nextIcon =
     !app.isPackaged ?
-        path.join(__dirname, '../../public/ic_next.png') :
+        path.join(__dirname, '../../../public/ic_next.png') :
         path.join(__dirname, '../../../dist/ic_next.png')
 
 

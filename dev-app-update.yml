@@ -1,3 +1,4 @@
 provider: github
 owner: userZheng686
 repo: vite-vue3-music
+releaseType : release

@@ -42,7 +42,6 @@ if (window.ipcRenderer) {
         } else {
             downloadQueue[value.item.id].item.progress = value.item.progress
         }
-
     })
 
     window.ipcRenderer.completeSongDownload(async (value: { type: number, item: SongDetailSongsItem }) => {

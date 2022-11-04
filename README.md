@@ -1,6 +1,6 @@
 # vite-vue3-music
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/80056bf0-069e-440c-a736-1781a1132187/deploy-status)](https://app.netlify.com/sites/neteasemusic/deploys) ![License](https://camo.githubusercontent.com/8d9f0c2c8232cb73a75fe504626eefdd12aa61b7fb40a5a539fd8faed7bfe876/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6963656e73652f7472617a796e2f69656173654d757369632e7376673f7374796c653d666c61742d737175617265) 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/80056bf0-069e-440c-a736-1781a1132187/deploy-status)](https://app.netlify.com/sites/neteasemusic/deploys) ![License](https://camo.githubusercontent.com/8d9f0c2c8232cb73a75fe504626eefdd12aa61b7fb40a5a539fd8faed7bfe876/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6963656e73652f7472617a796e2f69656173654d757369632e7376673f7374796c653d666c61742d737175617265) ![](https://github.com/userZheng686/vite-vue3-music/workflows/Build/badge.svg)
 
 仿网易云音乐，目前支持Web/客户端，客户端目前仅支持Windows端。以后会支持Mac，Linux端。
 
@@ -24,12 +24,13 @@
 - 右键菜单，对于每一个页面都有不一样的右键菜单
 - 首页栏目调整（组件拖拽）
 - 启动页（客户端）
+- 集成了Github的Action工作流
 - ...
 
 # 未来开发的功能:
 
 - [ ] 音频可视化
-- [ ] 手动/自动检查更新
+- [ ] 手动/自动检查更新(开发中)
 - [x] 自定义安装界面
 - [x] 离线/在线检测与桌面通知
 - [x] 拖拽播放

@@ -5,9 +5,11 @@ import createMainWindow from './main/index'
 import createLyricWindow from './lyric/index'
 import createMiniWindow from './mini/index'
 import createLoadingWindow from './loading/index'
+import './update'
 import { createTray } from './tray/index'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import { initProtocolSceme,regDefaultProtocol} from './protocol';
+import createUpdateWindow from './update/index';
 
 const args = [];
 if (!app.isPackaged) {
@@ -55,6 +57,7 @@ app.whenReady().then(() => {
     global.mainWindow = createMainWindow(BrowserWindow)
     global.lyricWindow = createLyricWindow(BrowserWindow)
     global.miniWindow = createMiniWindow(BrowserWindow)
+    global.updateWindow = createUpdateWindow(BrowserWindow)
     createTray()
 
 

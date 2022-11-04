@@ -236,24 +236,30 @@
     <div class="bar--name">{{ header.name }}</div>
     <!--用户-->
     <div class="bar--user">
-      <!--用户头像-->
-      <el-avatar
-        :size="30"
-        :src="
-          userInfo.avatar?.replace(/http:\//, 'https:/') +
-          '?imageView&enlarge=1&thumbnail=30y30&type=webp'
-        "
-        style="cursor: pointer"
-        @click="openHomePage"
-      />
-      <!--用户名称-->
-      <div class="user--wrap" @click="openDialog">
-        <div class="bar--user--name">
-          {{ userInfo.nickname }}
+      <div style="display: flex; align-items: center; position: relative">
+        <!--用户头像-->
+        <el-avatar
+          :size="30"
+          :src="
+            userInfo.avatar?.replace(/http:\//, 'https:/') +
+            '?imageView&enlarge=1&thumbnail=30y30&type=webp'
+          "
+          style="cursor: pointer"
+          @click="openHomePage"
+        />
+        <!--用户名称-->
+        <div class="user--wrap" @click="openDialog">
+          <div class="bar--user--name">
+            {{ userInfo.nickname }}
+          </div>
+          <el-icon class="user--down" v-if="userInfo.isLogin">
+            <CaretBottom />
+          </el-icon>
         </div>
-        <el-icon class="user--down" v-if="userInfo.isLogin">
-          <CaretBottom />
-        </el-icon>
+        <!--菜单弹窗-->
+        <transition name="el-fade-in">
+          <Menu></Menu>
+        </transition>
       </div>
       <div class="bar--sixin">
         <el-switch
@@ -269,15 +275,13 @@
           inactive-icon="Moon"
           inline-prompt
         />
-
-        <el-icon style="font-size: 20px" @click="openLetter">
+        <el-icon style="font-size: 20px" title="设置" @click="openSetting"
+          ><Setting
+        /></el-icon>
+        <el-icon style="font-size: 20px" @click="openLetter" title="私信">
           <Message />
         </el-icon>
       </div>
-      <!--菜单弹窗-->
-      <transition name="el-fade-in">
-        <Menu></Menu>
-      </transition>
       <!--最小化 还原 关闭-->
       <div
         class="bar--btngroup"
@@ -601,6 +605,13 @@ let openLetter = () => {
   } else {
     Popup.isOpenLoginPopup = true;
   }
+};
+
+//打开设置
+let openSetting = () => {
+  router.push({
+    path: "/setting",
+  });
 };
 
 //mini模式
