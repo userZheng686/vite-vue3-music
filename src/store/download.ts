@@ -64,24 +64,24 @@ let getInterruptedDownloadItem = async () => {
 let getCompleteDownloadSongItem = async () => {
     //下载目录
     songDir.value = await window.downloadAPI.getDownloadPath();
-    if(!songDir.value) return
     //读取本地文件
     let songDirFile = await window.readAPI.readDir(songDir.value);
     //读取客户端下载
-    let downloadList = await window.downloadAPI.getCustomDownload(1);
+    let downloadSongList = await window.downloadAPI.getCustomDownload(1);
     //客户端下载的文件名
-    let downloadListFileName = downloadList.map((item: SongDetailSongsItem) => {
+    let downloadSongListFileName = downloadSongList?.map((item: SongDetailSongsItem) => {
         let path = item.songUrl?.split(/\\/g);
         if (path?.length) {
             return path[path.length - 1];
         }
     });
+    if(!downloadSongListFileName) return
     //比对 拿本地下载的文件去对比客户端下载列表 找到符合的
-    songDirFile = songDirFile.filter((item: string) => {
-        return downloadListFileName.includes(item);
+    songDirFile = songDirFile?.filter((item: string) => {
+        return downloadSongListFileName.includes(item);
     });
     //比对 如果歌曲列表里面含有不是本地下载的文件 就先过滤
-    downloadList = downloadList.filter((item: SongDetailSongsItem) => {
+    downloadSongList = downloadSongList?.filter((item: SongDetailSongsItem) => {
         let path = item.songUrl?.split(/\\/g);
         if (path) {
             let fileName = path[path.length - 1];
@@ -90,15 +90,16 @@ let getCompleteDownloadSongItem = async () => {
             return false;
         }
     });
-    songDirFile.forEach(async (item: string, index: number) => {
-        let file = await window.readAPI.readFileMusic(songDir.value + "\\" + item);
+    songDirFile?.forEach(async (item: string, index: number) => {
+        let path = songDir.value + "\\" + item
+        let file = await window.readAPI.readFileMusic(path);
         let parseFile = JSON.parse(file);
-        let voiceListIndex = downloadList.findIndex(
+        let voiceListIndex = downloadSongList.findIndex(
             (items: SongDetailSongsItem) => items.fileName === item
         );
         if (voiceListIndex !== -1) {
-            downloadList[voiceListIndex].fileSize = parseFile.fileSize;
-            downloadList[voiceListIndex].from = {
+            downloadSongList[voiceListIndex].fileSize = parseFile.fileSize;
+            downloadSongList[voiceListIndex].from = {
                 path: 'localDownload',
                 name: '我下载的音乐',
                 val: {
@@ -109,10 +110,9 @@ let getCompleteDownloadSongItem = async () => {
         }
 
         if (index === songDirFile.length - 1) {
-            // console.log('downloadList', downloadList)
-            completeDownloadSongItem.value = downloadList;
-            window.downloadAPI.patchUpdateCustomDownload(1, JSON.stringify(completeDownloadSongItem.value))
+            completeDownloadSongItem.value = downloadSongList;
             completeDownloadSongsIds.value = completeDownloadSongItem.value.map(item => Number(item.id));
+            // window.downloadAPI.patchUpdateCustomDownload(1, JSON.stringify(completeDownloadSongItem.value))
         }
     });
 
@@ -122,34 +122,34 @@ let getCompleteDownloadSongItem = async () => {
 let getCompleteDownloadVoiceItem = async () => {
     //下载目录
     voiceDir.value = await window.downloadAPI.getDownloadPath();
-    if(!voiceDir.value) return
     voiceDir.value += "\\电台节目";
-    //读取客户端下载的所有声音
-    completeDownloadVoiceItem.value = await window.downloadAPI.getCustomDownload(2);
-    //读取电台节目下载目录的所有文件
-    let voiceDirPath = await window.readAPI.readDir(voiceDir.value);
+    //读取本地文件
+    let voiceDirFile = await window.readAPI.readDir(voiceDir.value);
+    //读取客户端下载
+    let downloadVoiceList = await window.downloadAPI.getCustomDownload(2);
     //所有下载过的声音文件名
-    let downloadVoiceListFileName = completeDownloadVoiceItem.value.map((item) => {
+    let downloadVoiceListFileName = downloadVoiceList?.map((item:SongDetailSongsItem) => {
         let path = item.songUrl?.split(/\\/g);
         if (path?.length) {
             return path[path.length - 1];
         }
     });
+    if(!downloadVoiceListFileName) return
     //比对 拿本地下载的文件去对比声音列表 找到符合的 再去读取信息
-    voiceDirPath = voiceDirPath.filter((item: string) => {
+    voiceDirFile = voiceDirFile?.filter((item: string) => {
         return downloadVoiceListFileName.includes(item);
     });
     //比对 如果声音列表里面含有不是本地下载的文件 就先过滤
-    completeDownloadVoiceItem.value = completeDownloadVoiceItem.value.filter((item) => {
+    downloadVoiceList = downloadVoiceList?.filter((item : SongDetailSongsItem) => {
         let path = item.songUrl?.split(/\\/g);
         if (path) {
             let fileName = path[path.length - 1];
-            return voiceDirPath.includes(fileName);
+            return voiceDirFile.includes(fileName);
         } else {
             return false;
         }
     });
-    voiceDirPath.forEach(async (item: string, index: number) => {
+    voiceDirFile?.forEach(async (item: string, index: number) => {
         let file = await window.readAPI.readFileMusic(voiceDir.value + "\\" + item);
         let parseFile = JSON.parse(file);
         let voiceListIndex = completeDownloadVoiceItem.value.findIndex(
@@ -166,8 +166,9 @@ let getCompleteDownloadVoiceItem = async () => {
                 }
             }
         }
-        if (index === voiceDirPath.length - 1) {
-            window.downloadAPI.patchUpdateCustomDownload(2, JSON.stringify(completeDownloadVoiceItem.value))
+        if (index === voiceDirFile.length - 1) {
+            completeDownloadVoiceItem.value = downloadVoiceList;
+            // window.downloadAPI.patchUpdateCustomDownload(2, JSON.stringify(completeDownloadVoiceItem.value))
         }
     });
 
@@ -178,28 +179,28 @@ let getCompleteDownloadMVItem = async () => {
     completeDownloadMVItems.value = []
     //下载目录
     let dirPath = await window.downloadAPI.getDownloadPath();
-    if(!dirPath) return
     //读取MV下载目录的所有文件
     let mvDirPath = await window.readAPI.readDir(dirPath + "\\MV");
     //读取已经下载过的所有MV列表
     let downloadMVList = await window.downloadAPI.getCustomDownload(3);
-    console.log('downloadMVList',downloadMVList)
     //所有下载过的MV文件名
-    let downloadMVListFileName = downloadMVList.map((item: { fileName: string }) => {
+    let downloadMVListFileName = downloadMVList?.map((item: { fileName: string }) => {
         return item.fileName;
     });
+    if(!downloadMVListFileName) return;
     //比对 拿本地下载的文件去对比MV列表 找到符合的 再去读取信息
-    mvDirPath = mvDirPath.filter((item: string) => {
+    mvDirPath = mvDirPath?.filter((item: string) => {
         return downloadMVListFileName.includes(item);
     });
     //比对 如果MV列表里面含有不是本地下载的文件 就先过滤
-    downloadMVList = downloadMVList.filter((item: { fileName: string }) => {
+    downloadMVList = downloadMVList?.filter((item: { fileName: string }) => {
         return mvDirPath.includes(item.fileName);
     });
     
     //过滤 比对数据
-    mvDirPath.forEach(async (item: string, index: number) => {
-        let fileSize = await window.readAPI.readFileMV(dirPath + "\\MV" + "\\" + item);
+    mvDirPath?.forEach(async (item: string, index: number) => {
+        let path = dirPath + "\\MV" + "\\" + item
+        let fileSize = await window.readAPI.readFileMV(path);
         let mvListIndex = downloadMVList.findIndex(
             (items: downloadMVItem) => items.fileName === item
         );

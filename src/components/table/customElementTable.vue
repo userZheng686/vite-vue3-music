@@ -15,22 +15,24 @@
           <div>
             <span
               class="el-table__column__info"
-              v-if="computedCurrentSongIsInTablePlayStatus(scope.row.id) === 'no-play'"
+              v-if="computedCurrentSongIsInTablePlayStatus(scope.row?.id) === 'no-play'"
               >{{
                 scope.row?.serialNum && props?.isShowSerialNum
-                  ? scope.row.serialNum
-                  : scope.$index + 1
+                  ? scope.row?.serialNum
+                  : scope?.$index + 1
               }}</span
             >
             <i
               class="iconfont icon-24gl-volumeHigh"
               style="color: #f56c6c"
-              v-if="computedCurrentSongIsInTablePlayStatus(scope.row.id) === 'play'"
+              v-if="computedCurrentSongIsInTablePlayStatus(scope.row?.id) === 'play'"
             ></i>
             <i
               class="iconfont icon-24gl-volumeZero"
               style="color: #f56c6c"
-              v-else-if="computedCurrentSongIsInTablePlayStatus(scope.row.id) === 'pause'"
+              v-else-if="
+                computedCurrentSongIsInTablePlayStatus(scope.row?.id) === 'pause'
+              "
             ></i>
           </div>
         </template>
@@ -124,15 +126,19 @@
       </el-table-column>
       <el-table-column label="播放次数" v-if="props.playCount">
         <template #default="scope">
-          <div class="info">{{ scope.row.playCount }}次</div>
+          <div class="info">{{ scope.row?.playCount }}次</div>
         </template>
       </el-table-column>
       <el-table-column label="歌词" v-if="props.lyric">
         <template #default="scope">
-          <div class="more-clamp2 info" :title="scope.row.lyrics.join('\n')">
-            <div v-for="item in scope.row.lyrics" :key="item" v-html="item"></div>
+          <div class="more-clamp2 info" :title="scope.row?.lyrics.join('\n')">
+            <div v-for="item in scope.row?.lyrics" :key="item" v-html="item"></div>
           </div>
-          <el-button type="danger" round size="small" @click="copyLyric(scope.row.lyrics)"
+          <el-button
+            type="danger"
+            round
+            size="small"
+            @click="copyLyric(scope.row?.lyrics)"
             >复制歌词</el-button
           >
         </template>
@@ -483,6 +489,7 @@ let updateLikes = (id: number) => {
 
 //跳转专辑详情
 let jumpAlbumDetail = (id: number) => {
+  if (!id) return;
   router.push({
     path: "/albumDetail",
     query: {

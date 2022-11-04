@@ -10,7 +10,7 @@
     <EventCloudDynamic />
     <!--分享动态-->
     <ShareEventDynamic />
-    <div class="main" :class="{ detail: !computedRoute(route.path) }">
+    <main class="main" :class="{ detail: !computedRoute(route.path) }">
       <router-view v-slot="{ Component, route }">
         <Navigation v-show="computedRoute(route.path)" />
         <div class="wrap" style="flex: 1; overflow-y: scroll; overflow-x: hidden">
@@ -24,7 +24,7 @@
           </transition>
         </div>
       </router-view>
-    </div>
+    </main>
     <footer class="footer" v-show="computedRoute(route.path)">
       <MusicPlay />
     </footer>
@@ -34,6 +34,11 @@
 <script setup lang="ts">
 import { usePopupStore } from "@/store/popup";
 import { useRoute } from "vue-router";
+
+import { play } from "@/utils/play";
+import { SongDetailSongsItem } from "i/api/api_song";
+
+import { initOpenFile } from "@/utils/open";
 
 let route = useRoute();
 let popup = usePopupStore();
@@ -51,6 +56,37 @@ let computedRoute = (path: string) => {
     return true;
   }
 };
+
+window.ondragenter = (event) => {
+  event.preventDefault();
+};
+
+window.ondragover = (event) => {
+  event.preventDefault();
+};
+
+//拖拽播放
+window.ondrop = function (event) {
+  event.preventDefault();
+  try {
+    let efile = event.dataTransfer;
+    let songs: SongDetailSongsItem[] = [];
+    if (efile?.files) {
+      let files = Array.from(efile.files);
+      files.forEach(async (item, index) => {
+        let result: string = await window.readAPI.readFileMusic(item.path);
+        songs.push(JSON.parse(result));
+        if (index === files.length - 1) {
+          play(songs, songs[0].id);
+        }
+      });
+    }
+  } catch (e: any) {
+    console.log("e", e);
+  }
+};
+
+initOpenFile();
 </script>
 
 <style scoped lang="scss">

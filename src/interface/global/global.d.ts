@@ -8,6 +8,20 @@ export interface desktopLyric {
     hide: Function;
 }
 
+export interface desktopUpdate {
+    getBounds: Function;
+    setBounds: Function;
+    setSize: Function;
+    show: Function;
+    hide: Function;
+    message : Function;
+    message2 : Function;
+    checkForUpdate : Function;
+    checkAppVersion : Function;
+    downloadUpdate : Function;
+    quitAndInstall : Function;
+}
+
 export interface desktopMini {
     getBounds: Function;
     setBounds: Function;
@@ -16,7 +30,10 @@ export interface desktopMini {
     hide: Function;
 }
 
+
+
 export interface desktopMain {
+    notification : Function;
     show: Function;
     hide: Function;
     focus: Function;
@@ -53,7 +70,11 @@ export interface cookie {
 }
 
 export interface download {
+    getAllSong163Key : Function;
+    getSong163Key : Function;
+    clear163key : Function;
     getCustomDownload: Function;
+    setDownloadPath : Function;
     getDownloadSongs: Function;
     getDownloadPath: Function;
     clearCustomDownload: Function;
@@ -70,6 +91,7 @@ export interface download {
 }
 
 export interface ipcRenderer {
+    openFile : Function;
     updateSongProgress: Function;
     completeSongDownload: Function;
     cancelSongDownload: Function;
@@ -113,6 +135,7 @@ declare global {
         desktopMainAPI: desktopMain;
         playAPICallback: playAPICallback;
         playAPI: playAPI;
+        desktopUpdateAPI : desktopUpdate;
     }
     interface Interrupted {
         eTag: string | undefined;

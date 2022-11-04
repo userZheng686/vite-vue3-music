@@ -43,7 +43,7 @@
               <el-icon><Message /></el-icon>
               <span>发私信</span>
             </el-button>
-            <el-button round>
+            <el-button round @click="follow(detail.followed ? 0 : 1)">
               <el-icon v-if="!detail.followed" style="color: red"><Plus /></el-icon>
               <el-icon v-else><Check /></el-icon>
               <span>{{ detail.followed ? "已关注" : "关注" }}</span>
@@ -141,7 +141,7 @@
 </template>
 
 <script setup lang="ts">
-import { getUsersBatch, getUserDj } from "@/api/api_user";
+import { getUsersBatch, getUserDj, getFollow } from "@/api/api_user";
 import { useRoute, useRouter } from "vue-router";
 import { useUserInformation } from "@/store/user";
 import { copyVal } from "@/utils/copy";
@@ -362,6 +362,17 @@ let openPage = (path: string, id: number) => {
 let isSelf = computed(() => {
   return Number(route.query?.id) === user?.user_profile?.userId;
 });
+
+//关注/取消关注用户
+let follow = async (type: number) => {
+  try {
+    let res = await getFollow(Number(route.query.id), type);
+    detail.followed = !detail.followed;
+    elMessage.success(`${type === 1 ? "关注成功" : "取消关注成功"}`);
+  } catch (e: any) {
+    elMessage.success("关注失败");
+  }
+};
 
 watch(
   () => route.query,

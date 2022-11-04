@@ -6,4 +6,6 @@ dist
 data
 release
 dist-ssr
+electron-build
+electron-dist
 *.local

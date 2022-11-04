@@ -31,7 +31,6 @@ export function play(playList: SongDetailSongsItem[], id: number | string) {
         songList.setListIndex(0);
     }
 
-
 }
 
 

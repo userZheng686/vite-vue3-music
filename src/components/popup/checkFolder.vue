@@ -39,7 +39,7 @@ let folderVisible = inject("folderVisible") as Ref<boolean>;
 
 //打开文件夹
 let openFolder = async () => {
-  let path = await window.folderAPI.openFolder();
+  let path = await window.folderAPI.openFolder("选择添加目录");
   if (!path.length) return;
   folder.setScanFolder(path[0]);
 };

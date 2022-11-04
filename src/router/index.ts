@@ -46,6 +46,8 @@ let eventDetail = () => import('@/views/eventDetail.vue')
 let search = () => import('@/views/search.vue')
 let tray = () => import('@/views/tray.vue')
 let privateContent = () => import('@/views/privateContent.vue')
+let setting = () => import('@/views/setting.vue')
+let desktopUpdate = () => import('@/views/desktopUpdate.vue')
 import { ElMessage } from 'element-plus';
 
 
@@ -314,6 +316,13 @@ const routes: Array<RouteRecordRaw> = [
             meta : {
                 
             }
+        }, {
+            path: '/setting',
+            name: 'Setting',
+            component: setting,
+            meta : {
+                
+            }
         }]
     },
     {
@@ -325,6 +334,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/desktopMini',
         name: 'DesktopMini',
         component: desktopMini
+    },
+    {
+        path: '/desktopUpdate',
+        name: 'DesktopUpdate',
+        component: desktopUpdate
     },
     {
         path: '/tray',

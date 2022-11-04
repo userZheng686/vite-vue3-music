@@ -565,14 +565,14 @@ let getMusicDetail = async () => {
     if (songList.list[songList.currentListIndex]?.songUrl) {
       audioSrc.value =
         "atom:///" + String(songList.list[songList.currentListIndex].songUrl);
-      audio.value.src =
-        "atom:///" + String(songList.list[songList.currentListIndex].songUrl);
+      // audio.value.src =
+      //   "atom:///" + String(songList.list[songList.currentListIndex].songUrl);
     } else {
       let { data } = await getSongUrl(
         Number(songList.list[songList.currentListIndex].id)
       );
       audioSrc.value = data[0].url.replace("http", "https");
-      audio.value.src = data[0].url.replace("http", "https");
+      // audio.value.src = data[0].url.replace("http", "https");
     }
     nextTick(() => {
       if (audio.value) {
@@ -637,7 +637,7 @@ let updateProgress = (e: Event) => {
     value = changeTwoDecimal(String(value));
     //更新开始时间
     if (audio.value) {
-      // audioTime.value = audio.value.currentTime;
+      audioTime.value = Math.floor(audio.value.currentTime * 1000);
       audioStart.value = transTime(audio.value.currentTime);
       songList.setCurrentSongPlayTime(transTime(audio.value.currentTime, true));
     }

@@ -56,7 +56,7 @@
         <template #default>
           <div class="wrap--list">
             <MvListItem
-              v-for="(item) in newMVList.list"
+              v-for="item in newMVList.list"
               :key="item.id"
               :item="item"
               titleClass="single-clamp"
@@ -109,7 +109,7 @@
         <template #default>
           <div class="wrap--list">
             <MvListItem
-              v-for="(item) in hotMVList.list"
+              v-for="item in hotMVList.list"
               :key="item.id"
               :item="item"
               :contextMenu="contextMenuMVList"
@@ -159,7 +159,7 @@
         <template #default>
           <div class="wrap--list">
             <MvListItem
-              v-for="(item) in wangyiMVList.list"
+              v-for="item in wangyiMVList.list"
               :key="item.id"
               :item="item"
               :isShowAuthor="false"
@@ -256,8 +256,7 @@ import { useRouter } from "vue-router";
 import { ArrowRight } from "@element-plus/icons-vue";
 import { getNewMv, getAllMv, getTopMv } from "@/api/api_mv";
 import { NewMvItem, TopMvItem } from "i/api/api_mv.d";
-import { normalizeAuthor } from "@/utils/author";
-import {contextMenuMVList} from '@/contextMenu/mv/normal'
+import { contextMenuMVList } from "@/contextMenu/mv/normal";
 
 let elMessage = inject("message") as any;
 

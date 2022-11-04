@@ -17,22 +17,23 @@
           <span
             class="el-table__column__info"
             v-if="
-              computedCurrentSongIsInTablePlayStatus(scope.row.mainSong.id) === 'no-play'
+              computedCurrentSongIsInTablePlayStatus(scope.row?.mainSong?.id) ===
+              'no-play'
             "
-            >{{ scope.row.serialNum }}</span
+            >{{ scope.row?.serialNum }}</span
           >
           <i
             class="iconfont icon-24gl-volumeHigh"
             style="color: #f56c6c"
             v-if="
-              computedCurrentSongIsInTablePlayStatus(scope.row.mainSong.id) === 'play'
+              computedCurrentSongIsInTablePlayStatus(scope.row?.mainSong?.id) === 'play'
             "
           ></i>
           <i
             class="iconfont icon-24gl-volumeZero"
             style="color: #f56c6c"
             v-else-if="
-              computedCurrentSongIsInTablePlayStatus(scope.row.mainSong.id) === 'pause'
+              computedCurrentSongIsInTablePlayStatus(scope.row?.mainSong?.id) === 'pause'
             "
           ></i>
         </template>
@@ -41,22 +42,22 @@
         <template #default="scope">
           <div class="radio--table__name">
             <PlayImage
-              :picUrl="scope.row.coverUrl"
+              :picUrl="scope.row?.coverUrl"
               :cursor="false"
               :param="60"
               :y="60"
               :width="'60px'"
               :height="'60px'"
             />
-            <span style="margin-left: 20px">{{ scope.row.name }}</span>
+            <span style="margin-left: 20px">{{ scope.row?.name }}</span>
           </div>
         </template>
       </el-table-column>
       <el-table-column width="">
         <template #default="scope">
-          <div v-if="scope.row.progress === 100">已播完</div>
-          <div class="el-table__column__info" v-else-if="scope.row.progress">
-            已播{{ scope.row.progress }}%
+          <div v-if="scope.row?.progress === 100">已播完</div>
+          <div class="el-table__column__info" v-else-if="scope.row?.progress">
+            已播{{ scope.row?.progress }}%
           </div>
         </template>
       </el-table-column>
@@ -64,16 +65,16 @@
         <template #default="scope">
           <div style="display: flex; align-items: center" class="el-table__column__info">
             <el-icon><VideoPlay /></el-icon>
-            <span style="margin-left: 5px">{{ scope.row.listenerCount }}</span>
+            <span style="margin-left: 5px">{{ scope.row?.listenerCount }}</span>
           </div>
         </template>
       </el-table-column>
       <el-table-column width="">
         <template #default="scope">
           <div style="display: flex; align-items: center" class="el-table__column__info">
-            <i class="iconfont icon-dianzan" :class="{ like: scope.row.liked }"></i>
+            <i class="iconfont icon-dianzan" :class="{ like: scope.row?.liked }"></i>
             <span style="margin-left: 5px; word-break: normal">{{
-              scope.row.likedCount
+              scope.row?.likedCount
             }}</span>
           </div>
         </template>
@@ -81,14 +82,14 @@
       <el-table-column width="">
         <template #default="scope">
           <div class="el-table__column__info">
-            {{ computedTime(scope.row.createTime) }}
+            {{ computedTime(scope.row?.createTime) }}
           </div>
         </template>
       </el-table-column>
       <el-table-column width="">
         <template #default="scope">
           <div class="el-table__column__info">
-            {{ playTime(scope.row.duration) }}
+            {{ playTime(scope.row?.duration) }}
           </div>
         </template>
       </el-table-column>
@@ -113,7 +114,7 @@ import { getSongStatus } from "@/api/api_song";
 //接口声明
 import { RadioProgramDetailItem } from "i/api/api_radio.d";
 //时间处理
-import { formDate,playTime } from "@/utils/filter";
+import { formDate, playTime } from "@/utils/filter";
 import { play } from "@/utils/play";
 import { Column } from "element-plus";
 
@@ -122,7 +123,7 @@ interface Props {
   layout?: string;
   list: RadioProgramDetailItem[];
   row?: string;
-  contextMenu ?: Function;
+  contextMenu?: Function;
 }
 
 let props = withDefaults(defineProps<Props>(), {
@@ -131,9 +132,9 @@ let props = withDefaults(defineProps<Props>(), {
 });
 
 //右键菜单
-let contextmenu = (row : RadioProgramDetailItem,column : Column,event : Event) => {
-  props.contextMenu && props.contextMenu(event, row)
-}
+let contextmenu = (row: RadioProgramDetailItem, column: Column, event: Event) => {
+  props.contextMenu && props.contextMenu(event, row);
+};
 
 //歌曲列表
 let songList = useSongStore();
