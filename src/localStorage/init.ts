@@ -117,6 +117,13 @@ export const rule : Ref<string> = useStorage("rule",'0');
 rule.value = '0'
 
 
+//更新版本
+export const version : Ref<string> = useStorage("version","1.0.0")
+
+
+//版本更新提示
+export const releaseNotes : Ref<string> = useStorage("releaseNotes","")
+
 //当前应用模式 0 完整模式 1 mini模式 2最小化
 export const changeMode : Ref<number> = useStorage("changeMode",0);
 changeMode.value = 0

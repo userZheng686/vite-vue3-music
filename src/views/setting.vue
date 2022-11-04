@@ -11,13 +11,17 @@
       <h1 id="shortcut">快捷键</h1>
       <el-divider />
       <h1 id="update">版本更新</h1>
-      <p>{{ version }}</p>
+      <p>{{ currentVersion }}</p>
       <el-button round @click="checkUpdate">检查更新</el-button>
     </main>
   </section>
 </template>
 
 <script setup lang="ts">
+import { version, releaseNotes } from "@/localStorage/init";
+
+let currentVersion = ref<string>("");
+
 let elMessage = inject("message") as any;
 
 let menu: Array<{
@@ -36,8 +40,6 @@ let menu: Array<{
 
 let check = ref<string>("快捷键");
 
-let version = ref<string>("");
-
 let isNativeApp = window.desktopUpdateAPI ? true : false;
 
 let openMenu = ({ title, id }: { title: string; id: string }) => {
@@ -51,12 +53,15 @@ if (isNativeApp) {
     switch (type) {
       case "needUpdate":
         {
+          let { version: version1, releaseNotes: releaseNotes1 } = JSON.parse(text);
+          version.value = version1;
+          releaseNotes.value = releaseNotes1;
           window.desktopUpdateAPI.show();
         }
         break;
       case "version":
         {
-          version.value = text;
+          currentVersion.value = text;
         }
         break;
       case "updateChecking":

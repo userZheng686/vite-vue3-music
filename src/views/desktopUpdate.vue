@@ -1,10 +1,8 @@
 <template>
   <div class="update--dialog" ref="desktop">
-    <p>发现新版本 v1.0.1</p>
+    <p>发现新版本 v{{ version }}</p>
     <dl>
-      <dt>1.提升了XXX</dt>
-      <dt>2.提升了XXX</dt>
-      <dt>3.提升了XXX</dt>
+      <dt v-for="item in releaseNotes.split(' ')" :key="item">{{ item }}</dt>
     </dl>
     <span v-if="updateProgress">当前进度：</span>
     <el-progress
@@ -24,6 +22,8 @@
 </template>
 
 <script setup lang="ts">
+import { version, releaseNotes } from "@/localStorage/init";
+
 const desktop = ref<null | HTMLElement>(null);
 
 let elMessage = inject("message") as any;
@@ -73,27 +73,24 @@ let initDrag = async function () {
   }
 };
 
-let isNativeApp = window.desktopUpdateAPI ? true : false;
-
-if (isNativeApp) {
-  window.desktopUpdateAPI.message((val: string) => {
-    let { type, text } = JSON.parse(val);
-    console.log("text", text);
-    switch (type) {
-      case "progress":
-        {
-          updateProgress.value = text;
-        }
-        break;
-      case "downloaded":
-        {
-          elMessage.success(text);
-        }
-        break;
-    }
-    alert(text);
-  });
-}
+window.desktopUpdateAPI.message2((val: string) => {
+  let { type, text } = JSON.parse(val);
+  console.log("text", text);
+  switch (type) {
+    case "progress":
+      {
+        updateProgress.value = Number(Number(text).toFixed(2));
+        console.log("updateProgress.value", updateProgress.value);
+      }
+      break;
+    case "downloaded":
+      {
+        elMessage.success(text);
+        window.desktopUpdateAPI.quitAndInstall();
+      }
+      break;
+  }
+});
 
 //不更新
 let notUpdate = () => {
@@ -129,7 +126,7 @@ body::-webkit-scrollbar {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding-top: 95px;
+  padding-top: 50px;
   background: #f8f8f8 url(../assets/image/loginBg.jpg) top center/contain no-repeat;
 
   > p {

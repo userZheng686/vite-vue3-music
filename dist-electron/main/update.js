@@ -27,6 +27,7 @@ if (!import_electron.app.isPackaged) {
 }
 const sendUpdateMessage = ({ type, text }) => {
   global.mainWindow.webContents.send("message", JSON.stringify({ type, text }));
+  global.updateWindow.webContents.send("message", JSON.stringify({ type, text }));
 };
 import_electron_updater.autoUpdater.autoDownload = false;
 import_electron_updater.autoUpdater.on("error", (error) => {
@@ -41,10 +42,13 @@ import_electron_updater.autoUpdater.on("checking-for-update", () => {
     text: message.checking
   });
 });
-import_electron_updater.autoUpdater.on("update-available", () => {
+import_electron_updater.autoUpdater.on("update-available", (info) => {
   sendUpdateMessage({
     type: "needUpdate",
-    text: message.updateAva
+    text: JSON.stringify({
+      ...info,
+      title: message.updateAva
+    })
   });
 });
 import_electron_updater.autoUpdater.on("update-not-available", () => {
@@ -64,13 +68,18 @@ import_electron_updater.autoUpdater.on("update-downloaded", () => {
     type: "downloaded",
     text: `\u66F4\u65B0\u4E0B\u8F7D\u5B8C\u6BD5\uFF0C\u5E94\u7528\u5C06\u91CD\u542F\u5E76\u8FDB\u884C\u5B89\u88C5`
   });
-  setImmediate(() => import_electron_updater.autoUpdater.quitAndInstall());
 });
 import_electron.ipcMain.on("checkForUpdate", () => {
   import_electron_updater.autoUpdater.checkForUpdates();
 });
 import_electron.ipcMain.on("downloadUpdate", () => {
   import_electron_updater.autoUpdater.downloadUpdate();
+});
+import_electron.ipcMain.on("quitAndInstall", () => {
+  setImmediate(() => {
+    import_electron_updater.autoUpdater.quitAndInstall();
+    import_electron.app.exit();
+  });
 });
 import_electron.ipcMain.on("checkAppVersion", () => {
   sendUpdateMessage({

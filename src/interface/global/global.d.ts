@@ -15,9 +15,11 @@ export interface desktopUpdate {
     show: Function;
     hide: Function;
     message : Function;
+    message2 : Function;
     checkForUpdate : Function;
     checkAppVersion : Function;
     downloadUpdate : Function;
+    quitAndInstall : Function;
 }
 
 export interface desktopMini {

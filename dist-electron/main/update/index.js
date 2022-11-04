@@ -51,7 +51,7 @@ const createUpdateWindow = function(BrowserWindow2) {
       nodeIntegration: true,
       enableRemoteModule: true,
       contextIsolation: true,
-      devTools: false,
+      devTools: true,
       preload: import_path.default.join(__dirname, "../../preload/index.js")
     }
   };
@@ -60,6 +60,7 @@ const createUpdateWindow = function(BrowserWindow2) {
     win.loadFile(import_path.default.join(__dirname, "../../../dist/index.html"), {
       hash: "desktopUpdate"
     });
+    win.webContents.openDevTools();
   } else {
     win.loadURL(winURL);
     win.webContents.openDevTools();

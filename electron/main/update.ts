@@ -1,4 +1,4 @@
-import { autoUpdater } from 'electron-updater';
+import { autoUpdater, UpdateInfo } from 'electron-updater';
 import { app, BrowserWindow, dialog, ipcMain,protocol } from 'electron';
 import path from 'path';
 
@@ -21,6 +21,7 @@ const sendUpdateMessage = ({type,text} : {
 }) => {
     // 发送消息给渲染进程
     global.mainWindow.webContents.send('message', JSON.stringify({type,text}));
+    global.updateWindow.webContents.send('message', JSON.stringify({type,text}));
 };
 
 // 设置自动下载为false，也就是说不开始自动下载
@@ -44,11 +45,14 @@ autoUpdater.on('checking-for-update', () => {
 
 
 // 检测到可以更新时
-autoUpdater.on('update-available', () => {
+autoUpdater.on('update-available', (info : UpdateInfo) => {
     // 这里我们可以做一个提示，让用户自己选择是否进行更新
     sendUpdateMessage({
         type : 'needUpdate',
-        text : message.updateAva
+        text : JSON.stringify({
+            ...info,
+            title : message.updateAva
+        })
     })
 });
 
@@ -78,7 +82,6 @@ autoUpdater.on('update-downloaded', () => {
         type : 'downloaded',
         text : `更新下载完毕，应用将重启并进行安装`
     })
-    setImmediate(() => autoUpdater.quitAndInstall());
 });
 
 // 我们需要主动触发一次更新检查
@@ -93,6 +96,13 @@ ipcMain.on('downloadUpdate', () => {
     autoUpdater.downloadUpdate();
 });
 
+//直接安装
+ipcMain.on('quitAndInstall',() => {
+    setImmediate(() => {
+        autoUpdater.quitAndInstall()
+        app.exit();
+    });
+})
 
 // 当前引用的版本告知给渲染层
 ipcMain.on('checkAppVersion', () => {

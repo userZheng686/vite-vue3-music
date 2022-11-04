@@ -1,6 +1,6 @@
 {
   "name": "neteasecloudmusic",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "userZheng686",
   "description": "vite-vue3-music",
   "main": "dist-electron/main/index.js",
@@ -132,7 +132,7 @@
       }
     ],
     "releaseInfo": {
-      "releaseNotes": "1.0.2版本"
+      "releaseNotes": "1.更新了xxx功能 2.更新了xxx功能 3.更新了xxx功能"
     },
     "fileAssociations": [
       {
