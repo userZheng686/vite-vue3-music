@@ -70,7 +70,6 @@ if (isNativeApp) {
         }
         break;
     }
-    alert(text);
   });
 
   //检测版本号
