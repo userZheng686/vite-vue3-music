@@ -17,7 +17,7 @@
     "dist": "rimraf dist && rimraf release && vite build && electron-builder -p always",
     "package": "electron-builder",
     "serve": "vite preview",
-    "git": "git add . && git cz && git push"
+    "git": "git add . && git cz && git push origin electron"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.5",
