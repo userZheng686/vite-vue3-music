@@ -60,10 +60,8 @@ const createUpdateWindow = function(BrowserWindow2) {
     win.loadFile(import_path.default.join(__dirname, "../../../dist/index.html"), {
       hash: "desktopUpdate"
     });
-    win.webContents.openDevTools();
   } else {
     win.loadURL(winURL);
-    win.webContents.openDevTools();
   }
   return win;
 };

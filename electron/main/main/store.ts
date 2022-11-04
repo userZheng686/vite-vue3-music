@@ -192,7 +192,7 @@ export function setDownloadPath(path: string) {
 export function getDownloadPath() {
     let downloadPath = store.get('downloadPath') || 'D:\\CloudMusic'
     if (downloadPath) {
-        setDownloadPath(`D:\\CloudMusic`)
+        // setDownloadPath(`D:\\CloudMusic`)
     }
     return downloadPath
 }

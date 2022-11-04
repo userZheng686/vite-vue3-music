@@ -1,7 +1,6 @@
 import { app, session, Notification ,ipcMain, shell, DownloadItem, BrowserWindow, nativeImage } from 'electron';
 import path from 'path'
 import { readDir, readFileMusic, readFileMV, encode163Key } from './read'
-// import { identifyMusic } from './identify'
 import { openFolder, openSong } from './folder'
 import { setStoreDownload } from './download'
 import { setCookie, getCookie, setHistroyDownloadInterrupted, getHistroyDownloadInterrupted, clearHistroyDownloadInterrupted, clearAllHistoryDownloadInterrupted, setDownloadSongs, getDownloadSongs, clearDownloadSongs, getDownloadMVs, clearDownloadMVs, getDownloadPath, setDownloadPath, getCustomDownload, clearCustomDownload, setUserScanFolder, getUserScanFolder, setUserCheckScanFolder, getUserCheckScanFolder, getDownloadVoicePath, getDownloadMVPath, patchUpdateCustomDownload, getAllSong163Key, clear163key, getSong163Key } from './store'
@@ -117,7 +116,6 @@ const createMainWindow = (browserWindow: typeof BrowserWindow) => {
     win = new BrowserWindow(obj)
 
     if (app.isPackaged) {
-        // win.loadURL('Icarus://./index.html/#/findMusic');
         win.loadFile(path.join(__dirname, "../../../dist/index.html"), {
             hash: 'findMusic'
         });
@@ -266,10 +264,11 @@ app.whenReady().then(() => {
     // })
 
     //打开文件夹选择窗口
-    ipcMain.handle('openFolder', async (event) => {
-        let folderPath = await openFolder()
+    ipcMain.handle('openFolder', async (event,title: string) => {
+        let folderPath = await openFolder(title)
         return folderPath
     })
+
 
     //打开文件所在路径
     ipcMain.on('openPath', (event, path: string) => {
@@ -335,6 +334,8 @@ app.whenReady().then(() => {
     //设置下载路径
     ipcMain.handle('setDownloadPath', (event, path: string) => {
         setDownloadPath(path)
+        getDownloadVoicePath()
+        getDownloadMVPath()
     })
 
     //获取用户选择扫描的路径

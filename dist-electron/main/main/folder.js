@@ -20,6 +20,7 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var stdin_exports = {};
 __export(stdin_exports, {
+  openDownloadFolder: () => openDownloadFolder,
   openFolder: () => openFolder,
   openSong: () => openSong
 });
@@ -27,10 +28,19 @@ module.exports = __toCommonJS(stdin_exports);
 var import_electron = require("electron");
 var path = __toESM(require("path"));
 var fs = __toESM(require("fs"));
-function openFolder() {
+function openFolder(title) {
   return new Promise((resolve) => {
     let path2 = import_electron.dialog.showOpenDialogSync({
-      title: "\u9009\u62E9\u6DFB\u52A0\u76EE\u5F55",
+      title: title || "\u9009\u62E9\u6DFB\u52A0\u76EE\u5F55",
+      properties: ["openFile", "openDirectory"]
+    });
+    resolve(path2);
+  });
+}
+function openDownloadFolder() {
+  return new Promise((resolve) => {
+    let path2 = import_electron.dialog.showOpenDialogSync({
+      title: "\u9009\u62E9\u4E0B\u8F7D\u7684\u5B58\u50A8\u76EE\u5F55",
       properties: ["openFile", "openDirectory"]
     });
     resolve(path2);

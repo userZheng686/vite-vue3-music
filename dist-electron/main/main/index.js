@@ -192,8 +192,8 @@ import_electron.app.whenReady().then(() => {
   import_electron.ipcMain.handle("clear163key", () => {
     return (0, import_store.clear163key)();
   });
-  import_electron.ipcMain.handle("openFolder", async (event) => {
-    let folderPath = await (0, import_folder.openFolder)();
+  import_electron.ipcMain.handle("openFolder", async (event, title) => {
+    let folderPath = await (0, import_folder.openFolder)(title);
     return folderPath;
   });
   import_electron.ipcMain.on("openPath", (event, path2) => {
@@ -237,6 +237,8 @@ import_electron.app.whenReady().then(() => {
   });
   import_electron.ipcMain.handle("setDownloadPath", (event, path2) => {
     (0, import_store.setDownloadPath)(path2);
+    (0, import_store.getDownloadVoicePath)();
+    (0, import_store.getDownloadMVPath)();
   });
   import_electron.ipcMain.handle("getUserScanFolder", (event) => {
     return (0, import_store.getUserScanFolder)();

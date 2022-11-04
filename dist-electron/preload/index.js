@@ -26,7 +26,7 @@ import_electron.contextBridge.exposeInMainWorld("folderAPI", {
   setUserScanFolder: (path) => import_electron.ipcRenderer.invoke("setUserScanFolder", path),
   getUserCheckScanFolder: () => import_electron.ipcRenderer.invoke("getUserCheckScanFolder"),
   setUserCheckScanFolder: (path) => import_electron.ipcRenderer.invoke("setUserCheckScanFolder", path),
-  openFolder: () => import_electron.ipcRenderer.invoke("openFolder"),
+  openFolder: (title) => import_electron.ipcRenderer.invoke("openFolder", title),
   openSong: () => import_electron.ipcRenderer.invoke("openSong")
 });
 import_electron.contextBridge.exposeInMainWorld("cookieAPI", {
@@ -40,6 +40,7 @@ import_electron.contextBridge.exposeInMainWorld("downloadAPI", {
   getCustomDownload: (type) => import_electron.ipcRenderer.invoke("getCustomDownload", type),
   patchUpdateCustomDownload: (type, list) => import_electron.ipcRenderer.invoke("patchUpdateCustomDownload", type, list),
   getDownloadSongs: () => import_electron.ipcRenderer.invoke("getDownloadSongs"),
+  setDownloadPath: (path) => import_electron.ipcRenderer.invoke("setDownloadPath", path),
   getDownloadPath: () => import_electron.ipcRenderer.invoke("getDownloadPath"),
   clearCustomDownload: (type) => import_electron.ipcRenderer.invoke("clearCustomDownload", type),
   clearDownloadSongs: () => import_electron.ipcRenderer.invoke("clearDownloadSongs"),

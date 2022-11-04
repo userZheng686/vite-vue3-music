@@ -3,10 +3,21 @@ import * as path from 'path'
 import * as fs from 'fs'
 
 //选择文件夹
-export function openFolder() {
+export function openFolder(title : string) {
     return new Promise((resolve) => {
         let path = dialog.showOpenDialogSync({
-            title: '选择添加目录',
+            title: title || '选择添加目录',
+            properties: ['openFile', 'openDirectory']
+        })
+        resolve(path)
+    })
+}
+
+//选择文件夹
+export function openDownloadFolder() {
+    return new Promise((resolve) => {
+        let path = dialog.showOpenDialogSync({
+            title: '选择下载的存储目录',
             properties: ['openFile', 'openDirectory']
         })
         resolve(path)

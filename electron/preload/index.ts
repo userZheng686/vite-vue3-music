@@ -40,7 +40,7 @@ contextBridge.exposeInMainWorld('folderAPI', {
     setUserScanFolder: (path: string) => ipcRenderer.invoke('setUserScanFolder', path),
     getUserCheckScanFolder: () => ipcRenderer.invoke('getUserCheckScanFolder'),
     setUserCheckScanFolder: (path: string[]) => ipcRenderer.invoke('setUserCheckScanFolder', path),
-    openFolder: () => ipcRenderer.invoke('openFolder'),
+    openFolder: (title) => ipcRenderer.invoke('openFolder',title),
     openSong: () => ipcRenderer.invoke('openSong'),
 });
 
@@ -62,6 +62,8 @@ contextBridge.exposeInMainWorld('downloadAPI', {
     patchUpdateCustomDownload: (type: number, list: any) => ipcRenderer.invoke('patchUpdateCustomDownload', type, list),
     //已经下载完的所有歌曲id
     getDownloadSongs: () => ipcRenderer.invoke('getDownloadSongs'),
+    //设置默认的下载路径
+    setDownloadPath : (path : string) => ipcRenderer.invoke('setDownloadPath',path),
     //获取默认的下载路径
     getDownloadPath: () => ipcRenderer.invoke('getDownloadPath'),
     //清空客户端下载的内容（测试）

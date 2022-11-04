@@ -74,6 +74,7 @@ export interface download {
     getSong163Key : Function;
     clear163key : Function;
     getCustomDownload: Function;
+    setDownloadPath : Function;
     getDownloadSongs: Function;
     getDownloadPath: Function;
     clearCustomDownload: Function;
